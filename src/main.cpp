@@ -101,6 +101,10 @@ void echequier()
     ImGui::PopStyleColor();
 }
 
+void enable_disable_white(bool couleur)
+{
+}
+
 int main()
 {
     float value{0.f};
@@ -115,6 +119,13 @@ int main()
             ImGui::Begin("Example");
 
             echequier(); // on creer l'echequier avec les bouton et les lettres
+            bool white_time_to_play{true};
+            enable_disable_white(white_time_to_play);
+            if (!white_time_to_play)
+            {
+                white_time_to_play = false; // black_time_to_play=true};
+                enable_disable_white(white_time_to_play);
+            }
 
             // ImGui::SliderFloat("My Value", &value, 0.f, 3.f);
 
