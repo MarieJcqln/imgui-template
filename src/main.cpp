@@ -2,6 +2,22 @@
 #include <iostream>
 #include "quick_imgui/quick_imgui.hpp"
 
+class Piece {
+    // Position
+    float position_x;
+    float position_y;
+
+    enum Color { white,
+                 black };
+
+    virtual Piece reset();
+    virtual Piece moves();
+    ~Piece();
+};
+
+class Pawn : public Piece {
+};
+
 void echequier()
 {
     // Draw the next ImGui widget on the same line as the previous one. Otherwise it would be below it
