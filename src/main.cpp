@@ -16,7 +16,7 @@ public:
     // virtual Piece reset();
     virtual void moves();
 
-    ~Piece();
+    ~Piece() = default;
 };
 
 class Pawn : public Piece {
