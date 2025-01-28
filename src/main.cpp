@@ -101,8 +101,20 @@ void echequier()
     ImGui::PopStyleColor();
 }
 
-void enable_disable_white(bool couleur)
+void enable_white_or_black(bool couleur)
 {
+    if (couleur == true)
+    {
+        // on "desactive" le jeu des noirs
+        // on appelle la class pour pion blanc
+        // enlever le hover des noirs
+    }
+    else
+    {
+        // on "desactive" le jeu des blancs
+        // on appelle la class pour pion noir
+        // enlever le hover des blancs
+    }
 }
 
 int main()
@@ -120,11 +132,11 @@ int main()
 
             echequier(); // on creer l'echequier avec les bouton et les lettres
             bool white_time_to_play{true};
-            enable_disable_white(white_time_to_play);
+            enable_white_or_black(white_time_to_play);
             if (!white_time_to_play)
             {
                 white_time_to_play = false; // black_time_to_play=true};
-                enable_disable_white(white_time_to_play);
+                enable_white_or_black(white_time_to_play);
             }
 
             // ImGui::SliderFloat("My Value", &value, 0.f, 3.f);
