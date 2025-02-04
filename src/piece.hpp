@@ -9,6 +9,8 @@ struct position {
     int x;
     int y;
 };
+void moves_straight(position piece_position, std::vector<position>& list_moves);
+void moves_diagonal(position piece_position, std::vector<position>& list_moves);
 
 class Piece {
 public:
