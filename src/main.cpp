@@ -1,40 +1,10 @@
 #include <imgui.h>
+#include <algorithm>
 #include <iostream>
+#include <list>
+#include "piece.hpp"
 #include "quick_imgui/quick_imgui.hpp"
 
-class Piece {
-public:
-    // Position
-    float       position_x;
-    float       position_y;
-    std::string letter;
-
-    enum Color { white,
-                 black };
-    Color color;
-
-    // virtual Piece reset();
-    virtual void moves();
-
-    ~Piece() = default;
-};
-
-class Pawn : public Piece {
-    std::string letter{"P"};
-    void        moves() override;
-};
-
-void Pawn::moves()
-{
-    if (color == white)
-    {
-        position_x -= 8;
-    }
-    else if (color == black)
-    {
-        position_x += 8;
-    }
-}
 
 void echequier()
 {
