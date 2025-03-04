@@ -33,6 +33,7 @@ public:
 };
 // moves : avance sauf si un pion de la même couleur est sur son chemin
 class Pawn : public Piece {
+public:
     // std::string           letter{"P"};
     Pawn(Color c)
         : Piece("P", c)
@@ -42,6 +43,7 @@ class Pawn : public Piece {
 };
 
 class Tower : public Piece {
+public:
     // std::string           letter{"T"};
     Tower(Color c)
         : Piece("T", c)
@@ -51,6 +53,7 @@ class Tower : public Piece {
 };
 
 class Bishop : public Piece {
+public:
     // std::string           letter{"B"};
     Bishop(Color c)
         : Piece("B", c)
@@ -60,6 +63,7 @@ class Bishop : public Piece {
 };
 
 class Horse : public Piece {
+public:
     // std::string           letter{"H"};
     Horse(Color c)
         : Piece("H", c)
@@ -69,6 +73,7 @@ class Horse : public Piece {
 };
 
 class Queen : public Piece {
+public:
     // std::string           letter{"Q"};
     Queen(Color c)
         : Piece("Q", c)
@@ -78,6 +83,7 @@ class Queen : public Piece {
 };
 
 class King : public Piece {
+public:
     // std::string           letter{"K"};
     King(Color c)
         : Piece("K", c)
