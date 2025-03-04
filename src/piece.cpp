@@ -65,35 +65,35 @@ void moves_diagonal(position piece_position, std::vector<position>& list_moves)
     // return list_moves;
 }
 
-std::vector<position> Pawn::moves_possible()
+std::vector<position> Pawn::moves_possible(position piece_position)
 {
     std::vector<position> list_moves{};
-    if (color == white)
+    if (m_color == white)
     {
         list_moves.emplace_back(piece_position.x - 8, piece_position.y); // emplace back = pushback
     }
-    else if (color == black)
+    else if (m_color == black)
     {
         list_moves.emplace_back(piece_position.x + 8, piece_position.y);
     }
     return list_moves;
 }
 
-std::vector<position> Tower::moves_possible()
+std::vector<position> Tower::moves_possible(position piece_position)
 {
     std::vector<position> list_moves{};
     moves_straight(piece_position, list_moves);
     return list_moves;
 }
 
-std::vector<position> Bishop::moves_possible()
+std::vector<position> Bishop::moves_possible(position piece_position)
 {
     std::vector<position> list_moves{};
     moves_diagonal(piece_position, list_moves);
     return list_moves;
 }
 
-std::vector<position> Horse::moves_possible()
+std::vector<position> Horse::moves_possible(position piece_position)
 {
     std::vector<position> list_moves{};
 
@@ -111,7 +111,7 @@ std::vector<position> Horse::moves_possible()
     return list_moves;
 }
 
-std::vector<position> Queen::moves_possible()
+std::vector<position> Queen::moves_possible(position piece_position)
 {
     std::vector<position> list_moves{};
 
@@ -122,7 +122,7 @@ std::vector<position> Queen::moves_possible()
     return list_moves;
 }
 
-std::vector<position> King::moves_possible()
+std::vector<position> King::moves_possible(position piece_position)
 {
     std::vector<position> list_moves{};
 
