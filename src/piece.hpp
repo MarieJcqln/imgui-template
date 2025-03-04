@@ -12,15 +12,14 @@ struct position {
 };
 void moves_straight(position piece_position, std::vector<position>& list_moves);
 void moves_diagonal(position piece_position, std::vector<position>& list_moves);
-
+enum Color { white,
+             black };
 class Piece {
 public:
     // Position
     // position    piece_position;
     std::string m_letter;
 
-    enum Color { white,
-                 black };
     Color m_color;
 
     // virtual Piece reset();
