@@ -88,8 +88,19 @@
 
 //     ImGui::PopStyleColor();
 // }
+void recuperer_lettre(int& y, int& x, std::array<std::array<std::string, 8>, 8>& tab)
+{
+    std::cout << tab[y][x] << std::endl;
+}
 
-void echequier(std::array<std::array<std::string, 8>, 8>& tab_piece)
+void supprimer_lettre(int& y, int& x, std::array<std::array<std::string, 8>, 8>& tab)
+{
+}
+void ajouter_lettre(int& y, int& x, std::array<std::array<std::string, 8>, 8>& tab)
+{
+}
+
+void echequier(std::array<std::array<std::unique_ptr<Piece>, 8>, 8>& tab_piece)
 {
     // Draw the next ImGui widget on the same line as the previous one. Otherwise it would be below it
 
@@ -124,7 +135,12 @@ void echequier(std::array<std::array<std::string, 8>, 8>& tab_piece)
 
             ImGui::PushID(compteur);
 
-            ImGui::Button((tab_piece[y][x]).c_str(), ImVec2{50.f, 50.f});
+            std::string label = (tab_piece[y][x] ? tab_piece[y][x]->m_letter : ""); // si la case est nullptr on retourne un bouton vide, sinon on récupère m_lettre
+
+            if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))
+            {
+                std::cout << "Clicked button " << y << "," << x << "\n";
+            }
 
             ImGui::PopID();
             if ((compteur + 1) % 8 != 0) /// ou if (x != 7)
@@ -170,17 +186,50 @@ int main()
 {
     float value{0.f};
 
-    std::array<std::array<std::string, 8>, 8> tab_piece{
-        std::array<std::string, 8>{"T", "C", "F", "K", "O", "F", "C", "T"},
-        std::array<std::string, 8>{"P", "P", "P", "P", "P", "P", "P", "P"},
-        std::array<std::string, 8>{"", "", "", "", "", "", "", ""},
-        std::array<std::string, 8>{"", "", "", "", "", "", "", ""},
-        std::array<std::string, 8>{"", "", "", "", "", "", "", ""},
-        std::array<std::string, 8>{"", "", "", "", "", "", "", ""},
-        std::array<std::string, 8>{"P", "P", "P", "P", "P", "P", "P", "P"},
-        std::array<std::string, 8>{"T", "C", "F", "K", "O", "F", "C", "T"},
-    };
-
+    // std::array<std::array<std::unique_ptr<Piece>, 8>, 8> tab_piece{
+    //     std::array<std::string, 8>{std::make_unique<Tower>(Color::black), "C", "F", "K", "O", "F", "C", "T"},
+    //     std::array<std::string, 8>{"P", "P", "P", "P", "P", "P", "P", "P"},
+    //     std::array<std::string, 8>{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr},
+    //     std::array<std::string, 8>{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr},
+    //     std::array<std::string, 8>{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr},
+    //     std::array<std::string, 8>{nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr},
+    //     std::array<std::string, 8>{"P", "P", "P", "P", "P", "P", "P", "P"},
+    //     std::array<std::string, 8>{"T", "C", "F", "K", "O", "F", "C", "T"},
+    // };
+    std::cout << "11";
+    std::array<std::array<std::unique_ptr<Piece>, 8>, 8> tab_piece{};
+    tab_piece[0][0] = std::make_unique<Tower>(Color::black);  // T
+    tab_piece[0][1] = std::make_unique<Horse>(Color::black);  // C
+    tab_piece[0][2] = std::make_unique<Bishop>(Color::black); // F
+    tab_piece[0][3] = std::make_unique<King>(Color::black);   // K
+    tab_piece[0][4] = std::make_unique<Queen>(Color::black);  // O
+    tab_piece[0][5] = std::make_unique<Bishop>(Color::black); // F
+    tab_piece[0][6] = std::make_unique<Horse>(Color::black);  // C
+    tab_piece[0][7] = std::make_unique<Tower>(Color::black);  // T
+    for (int i{0}; i < 8; i++)                                // Px8
+    {
+        tab_piece[1][i] = std::make_unique<Pawn>(Color::black);
+    }
+    for (int i{0}; i < 8; i++)
+    {
+        for (int y{2}; y < 6; y++) // Px8
+        {
+            tab_piece[y][i] = nullptr;
+        }
+    }
+    for (int i{0}; i < 8; i++) // Px8
+    {
+        tab_piece[6][i] = std::make_unique<Pawn>(Color::white);
+    }
+    tab_piece[7][0] = std::make_unique<Tower>(Color::white);  // T
+    tab_piece[7][1] = std::make_unique<Horse>(Color::white);  // C
+    tab_piece[7][2] = std::make_unique<Bishop>(Color::white); // F
+    tab_piece[7][3] = std::make_unique<King>(Color::white);   // K
+    tab_piece[7][4] = std::make_unique<Queen>(Color::white);  // O
+    tab_piece[7][5] = std::make_unique<Bishop>(Color::white); // F
+    tab_piece[7][6] = std::make_unique<Horse>(Color::white);  // C
+    tab_piece[7][7] = std::make_unique<Tower>(Color::white);  // T
+    // std::cout << "22";
     quick_imgui::loop(
         "Chess",
         /* init: */ [&]() {},
@@ -189,15 +238,16 @@ int main()
             ImGui::ShowDemoWindow(); // This opens a window which shows tons of examples of what you can do with ImGui. You should check it out! Also, you can use the "Item Picker" in the top menu of that demo window: then click on any widget and it will show you the corresponding code directly in your IDE!
 
             ImGui::Begin("Example");
-
+            // std::cout << "33";
             echequier(tab_piece); // on creer l'echequier avec les bouton et les lettres
-
+            // std::cout << "44";
             bool white_time_to_play{true};
             enable_white_or_black(white_time_to_play);
             if (!white_time_to_play) // black_time_to_play=true};
             {
                 enable_white_or_black(white_time_to_play);
             }
+            // std::cout << "55";
 
             // ImGui::SliderFloat("My Value", &value, 0.f, 3.f);
 
