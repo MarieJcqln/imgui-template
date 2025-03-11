@@ -10,10 +10,13 @@ struct position {
     int x;
     int y;
 };
+
 void moves_straight(position piece_position, std::vector<position>& list_moves);
 void moves_diagonal(position piece_position, std::vector<position>& list_moves);
+
 enum Color { white,
              black };
+
 class Piece {
 public:
     // Position
@@ -31,6 +34,7 @@ public:
 
     virtual ~Piece() = default;
 };
+
 // moves : avance sauf si un pion de la même couleur est sur son chemin
 class Pawn : public Piece {
 public:

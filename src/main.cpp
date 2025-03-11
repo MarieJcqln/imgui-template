@@ -100,6 +100,8 @@ void ajouter_lettre(int& y, int& x, std::array<std::array<std::string, 8>, 8>& t
 {
 }
 
+void path_choice();
+
 void echequier(std::array<std::array<std::unique_ptr<Piece>, 8>, 8>& tab_piece)
 {
     // Draw the next ImGui widget on the same line as the previous one. Otherwise it would be below it
@@ -139,7 +141,19 @@ void echequier(std::array<std::array<std::unique_ptr<Piece>, 8>, 8>& tab_piece)
 
             if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))
             {
-                std::cout << "Clicked button " << y << "," << x << "\n";
+                std::cout << "Clicked button " << y << "," << x << std::endl;
+
+                if (tab_piece[y][x] != nullptr)
+                {
+                    std::cout << "Letter: " << tab_piece[y][x]->m_letter << std::endl;
+                    std::cout << "Color: " << tab_piece[y][x]->m_color << std::endl;
+                    // le bouton change de couleur (bleu foncé)
+                    path_choice(); // on montre les différents chemin possible pour le pion cliqué
+                }
+                else
+                {
+                    std::cout << "No pawn at this position" << std::endl;
+                }
             }
 
             ImGui::PopID();
@@ -196,7 +210,7 @@ int main()
     //     std::array<std::string, 8>{"P", "P", "P", "P", "P", "P", "P", "P"},
     //     std::array<std::string, 8>{"T", "C", "F", "K", "O", "F", "C", "T"},
     // };
-    std::cout << "11";
+    // std::cout << "11";
     std::array<std::array<std::unique_ptr<Piece>, 8>, 8> tab_piece{};
     tab_piece[0][0] = std::make_unique<Tower>(Color::black);  // T
     tab_piece[0][1] = std::make_unique<Horse>(Color::black);  // C
