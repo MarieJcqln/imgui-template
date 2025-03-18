@@ -1,12 +1,14 @@
 #include "piece.hpp"
+#include "echequier.hpp"
 
-void moves_straight(position piece_position, std::vector<position>& list_moves)
+// On va passer en paramètre un board (class) qui contient info du board
+void moves_straight(position piece_position, std::vector<position>& list_moves, Echequier& echequier)
 {
     // std::vector<position> list_moves{};
 
     // Avance en ligne jusqu'à rencontrer une piece
     int i{0};
-    while ("pas de pièce au dessus et sur le plateau")
+    while (echequier.tab_piece[echequier.selected_piece_position.x][(echequier.selected_piece_position.y) + i]) // et sur le plateu
     {
         list_moves.emplace_back(piece_position.x, piece_position.y + i);
         i++;
@@ -30,7 +32,7 @@ void moves_straight(position piece_position, std::vector<position>& list_moves)
     // return list_moves;
 }
 
-void moves_diagonal(position piece_position, std::vector<position>& list_moves)
+void moves_diagonal(position piece_position, std::vector<position>& list_moves, Echequier& echequier)
 {
     // std::vector<position> list_moves{};
 
@@ -65,7 +67,7 @@ void moves_diagonal(position piece_position, std::vector<position>& list_moves)
     // return list_moves;
 }
 
-std::vector<position> Pawn::moves_possible(position piece_position)
+std::vector<position> Pawn::moves_possible(position piece_position, Echequier& echiquier)
 {
     std::vector<position> list_moves{};
     if (m_color == white)
@@ -79,21 +81,21 @@ std::vector<position> Pawn::moves_possible(position piece_position)
     return list_moves;
 }
 
-std::vector<position> Tower::moves_possible(position piece_position)
+std::vector<position> Tower::moves_possible(position piece_position, Echequier& echiquier)
 {
     std::vector<position> list_moves{};
-    moves_straight(piece_position, list_moves);
+    moves_straight(piece_position, list_moves, echiquier);
     return list_moves;
 }
 
-std::vector<position> Bishop::moves_possible(position piece_position)
+std::vector<position> Bishop::moves_possible(position piece_position, Echequier& echiquier)
 {
     std::vector<position> list_moves{};
-    moves_diagonal(piece_position, list_moves);
+    moves_diagonal(piece_position, list_moves, echiquier);
     return list_moves;
 }
 
-std::vector<position> Horse::moves_possible(position piece_position)
+std::vector<position> Horse::moves_possible(position piece_position, Echequier& echiquier)
 {
     std::vector<position> list_moves{};
 
@@ -111,18 +113,18 @@ std::vector<position> Horse::moves_possible(position piece_position)
     return list_moves;
 }
 
-std::vector<position> Queen::moves_possible(position piece_position)
+std::vector<position> Queen::moves_possible(position piece_position, Echequier& echiquier)
 {
     std::vector<position> list_moves{};
 
     // Avance en ligne et diagonale
-    moves_diagonal(piece_position, list_moves);
-    moves_straight(piece_position, list_moves);
+    moves_diagonal(piece_position, list_moves, echiquier);
+    moves_straight(piece_position, list_moves, echiquier);
 
     return list_moves;
 }
 
-std::vector<position> King::moves_possible(position piece_position)
+std::vector<position> King::moves_possible(position piece_position, Echequier& echiquier)
 {
     std::vector<position> list_moves{};
 

@@ -4,18 +4,16 @@
 #include <iostream>
 #include <list>
 #include <utility>
+#include "echequier.hpp"
 #include "quick_imgui/quick_imgui.hpp"
-
-struct position {
-    int x;
-    int y;
-};
-
-void moves_straight(position piece_position, std::vector<position>& list_moves);
-void moves_diagonal(position piece_position, std::vector<position>& list_moves);
+#include "utils.hpp"
 
 enum Color { white,
              black };
+
+class Echequier;
+void moves_straight(position piece_position, std::vector<position>& list_moves, Echequier& echiquier);
+void moves_diagonal(position piece_position, std::vector<position>& list_moves, Echequier& echiquier);
 
 class Piece {
 public:
@@ -26,7 +24,7 @@ public:
     Color m_color;
 
     // virtual Piece reset();
-    virtual std::vector<position> moves_possible(position piece_position) = 0;
+    virtual std::vector<position> moves_possible(position piece_position, Echequier& echiquier) = 0;
 
     Piece() = default;
     Piece(std::string l, Color c)
@@ -43,7 +41,7 @@ public:
         : Piece("P", c)
     {}
 
-    std::vector<position> moves_possible(position piece_position) override;
+    std::vector<position> moves_possible(position piece_position, Echequier& echiquier) override;
 };
 
 class Tower : public Piece {
@@ -53,7 +51,7 @@ public:
         : Piece("T", c)
     {}
 
-    std::vector<position> moves_possible(position piece_position) override;
+    std::vector<position> moves_possible(position piece_position, Echequier& echiquier) override;
 };
 
 class Bishop : public Piece {
@@ -63,7 +61,7 @@ public:
         : Piece("B", c)
     {}
 
-    std::vector<position> moves_possible(position piece_position) override;
+    std::vector<position> moves_possible(position piece_position, Echequier& echiquier) override;
 };
 
 class Horse : public Piece {
@@ -73,7 +71,7 @@ public:
         : Piece("H", c)
     {}
 
-    std::vector<position> moves_possible(position piece_position) override;
+    std::vector<position> moves_possible(position piece_position, Echequier& echiquier) override;
 };
 
 class Queen : public Piece {
@@ -83,7 +81,7 @@ public:
         : Piece("Q", c)
     {}
 
-    std::vector<position> moves_possible(position piece_position) override;
+    std::vector<position> moves_possible(position piece_position, Echequier& echiquier) override;
 };
 
 class King : public Piece {
@@ -93,5 +91,5 @@ public:
         : Piece("K", c)
     {}
 
-    std::vector<position> moves_possible(position piece_position) override;
+    std::vector<position> moves_possible(position piece_position, Echequier& echiquier) override;
 };
