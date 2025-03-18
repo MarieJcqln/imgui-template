@@ -1,4 +1,5 @@
 #include "echequier.hpp"
+#include "utils.hpp"
 
 void enable_white_or_black(bool white)
 {
@@ -125,10 +126,10 @@ void Echequier::draw()
 
                                 // le bouton change de couleur (bleu foncé)
 
-                                // ICI Marie du futur : il faut continuer les fonctions gérant les moves en faisant attention aux doubles dépendances (résolu par max)
-                                //  path_choice(); // on montre les différents chemin possible pour le pion cliqué
+                                // ICI : il faut continuer les fonctions gérant les moves en faisant attention aux doubles dépendances (résolu par max)
+                                // On montre les différents chemin possible pour le pion cliqué
 
-                                // appeler moves possible
+                                tab_piece[y][x]->moves_possible(selected_piece_position, *this); // mettre les bons arguments
                             }
 
                             else
