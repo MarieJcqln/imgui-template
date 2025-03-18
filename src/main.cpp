@@ -6,88 +6,6 @@
 #include "piece.hpp"
 #include "quick_imgui/quick_imgui.hpp"
 
-// void echequier()
-// {
-//     // Draw the next ImGui widget on the same line as the previous one. Otherwise it would be below it
-
-//     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{1.0f, 1.0f});
-
-//     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f}); // Changes the color of all buttons until we call ImGui::PopStyleColor(). There is also ImGuiCol_ButtonActive and ImGuiCol_ButtonHovered
-
-//     // ImGui::PushID(2); // When some ImGui items have the same label (for exemple the next two buttons are labeled "Yo") ImGui needs you to specify an ID so that it can distinguish them. It can be an int, a pointer, a string, etc.
-//     //  You will definitely run into this when you create a button for each of your chess pieces, so remember to give them an ID!
-//     // ImGui::Button("", ImVec2{50.f, 50.f});
-
-//     // ImGui::PopID(); // Then pop the id you pushed after you created the widget
-
-//     for (int i{0}; i < 64; i++)
-//     {
-//         int const y = i / 8;
-//         int const x = i % 8;
-//         if (y % 2 == 0)
-//         {
-//             if (x % 2 == 0)
-//             {
-//                 ImGui::PopStyleColor();
-//                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{1.f, 1.f, 1.f, 1.f});
-//             }
-//         }
-//         else if (x % 2 != 0)
-//         {
-//             ImGui::PopStyleColor();
-//             ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{1.f, 1.f, 1.f, 1.f});
-//         }
-
-//         ImGui::PushID(i);
-//         if (y == 1 || y == 6)
-//         {
-//             ImGui::Button("P", ImVec2{50.f, 50.f});
-//         }
-//         else if (y == 0 || y == 7)
-//         {
-//             if (x == 0 || x == 7)
-//             {
-//                 ImGui::Button("T", ImVec2{50.f, 50.f});
-//             }
-//             if (x == 1 || x == 6)
-//             {
-//                 ImGui::Button("C", ImVec2{50.f, 50.f});
-//             }
-//             if (x == 2 || x == 5)
-//             {
-//                 ImGui::Button("F", ImVec2{50.f, 50.f});
-//             }
-//             if (x == 3)
-//             {
-//                 ImGui::Button("K", ImVec2{50.f, 50.f});
-//             }
-//             if (x == 4)
-//             {
-//                 ImGui::Button("Q", ImVec2{50.f, 50.f});
-//             }
-//         }
-//         else
-//         {
-//             ImGui::Button("", ImVec2{50.f, 50.f});
-//         }
-//         ImGui::PopID();
-//         if ((i + 1) % 8 != 0)
-//         {
-//             ImGui::SameLine();
-//         }
-//         ImGui::PopStyleColor();
-//         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f});
-//     }
-
-//     /* ImGui::SameLine();
-//     ImGui::PushID(3);
-//     if (ImGui::Button("Yo", ImVec2{50.f, 50.f}))
-//         std::cout << "Clicked button 3\n";
-//     ImGui::PopID(); */
-//     ImGui::PopStyleVar();
-
-//     ImGui::PopStyleColor();
-// }
 void recuperer_lettre(int& y, int& x, std::array<std::array<std::string, 8>, 8>& tab)
 {
     std::cout << tab[y][x] << std::endl;
@@ -100,15 +18,13 @@ void ajouter_lettre(int& y, int& x, std::array<std::array<std::string, 8>, 8>& t
 {
 }
 
-void path_choice();
+void path_choice() {}
 
 void echequier(std::array<std::array<std::unique_ptr<Piece>, 8>, 8>& tab_piece)
 {
-    // Draw the next ImGui widget on the same line as the previous one. Otherwise it would be below it
-
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{1.0f, 1.0f});
 
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f}); // Changes the color of all buttons until we call ImGui::PopStyleColor(). There is also ImGuiCol_ButtonActive and ImGuiCol_ButtonHovered
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f}); // initialisation of the color of all buttons until we call ImGui::PopStyleColor(). There is also ImGuiCol_ButtonActive and ImGuiCol_ButtonHovered
 
     // ImGui::PushID(2); // When some ImGui items have the same label (for exemple the next two buttons are labeled "Yo") ImGui needs you to specify an ID so that it can distinguish them. It can be an int, a pointer, a string, etc.
     //  You will definitely run into this when you create a button for each of your chess pieces, so remember to give them an ID!
@@ -116,28 +32,45 @@ void echequier(std::array<std::array<std::unique_ptr<Piece>, 8>, 8>& tab_piece)
 
     // ImGui::PopID(); // Then pop the id you pushed after you created the widget
     int compteur{0};
-    for (int y{0}; y < 8; y++)     // ligne
-        for (int x{0}; x < 8; x++) // colonne
+    for (int y{0}; y < 8; y++)
+    {                              // line
+        for (int x{0}; x < 8; x++) // column
         {
-            // int const y = i / 8;
-            // int const x = i % 8;
-            if (y % 2 == 0)
+            bool isWhite = (y + x) % 2 == 0;
+            if (isWhite)
             {
-                if (x % 2 == 0)
-                {
-                    ImGui::PopStyleColor();
-                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{1.f, 1.f, 1.f, 1.f});
-                }
-            }
-            else if (x % 2 != 0)
-            {
-                ImGui::PopStyleColor();
+                // Apply white background for the white squares
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{1.f, 1.f, 1.f, 1.f});
             }
 
             ImGui::PushID(compteur);
 
             std::string label = (tab_piece[y][x] ? tab_piece[y][x]->m_letter : ""); // si la case est nullptr on retourne un bouton vide, sinon on récupère m_lettre
+
+            // Verifie qu'une piece est sur cette case et on lui applique une couleur a cette case correpondant a la couleur du pion
+            // pour l'instant on ne voit pas cette couleur
+            if (tab_piece[y][x] != nullptr)
+            {
+                // Change color based on piece color
+                if (tab_piece[y][x]->m_color == white)
+                {
+                    // si piece blanche, bouton devient bleu donce
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.3f, 1.f}); // bleu foncé
+                }
+                else
+                {
+                    // si pice noire bouton devient bleu clair
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.9f, 1.f}); // bleu clair
+                }
+            }
+            // if (tab_piece[y][x] != nullptr)
+            // {
+            //     ImVec4 color = (tab_piece[y][x]->m_color == white) ? ImVec4(0.0f, 0.0f, 0.5f, 1.0f)  // Bleu foncé
+            //                                                        : ImVec4(0.0f, 0.0f, 0.9f, 1.0f); // Bleu clair
+            //     ImGui::PushStyleColor(ImGuiCol_Button, color);
+            //     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(color.x + 0.1f, color.y + 0.1f, color.z + 0.1f, 1.0f));
+            //     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(color.x + 0.2f, color.y + 0.2f, color.z + 0.2f, 1.0f));
+            // }
 
             if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))
             {
@@ -147,33 +80,42 @@ void echequier(std::array<std::array<std::unique_ptr<Piece>, 8>, 8>& tab_piece)
                 {
                     std::cout << "Letter: " << tab_piece[y][x]->m_letter << std::endl;
                     std::cout << "Color: " << tab_piece[y][x]->m_color << std::endl;
-                    // le bouton change de couleur (bleu foncé)
+                    // le bouton cliqué change de couleur (bleu foncé)
+
                     path_choice(); // on montre les différents chemin possible pour le pion cliqué
                 }
+
                 else
                 {
                     std::cout << "No pawn at this position" << std::endl;
                 }
             }
+            // pop la couleur de la case quand la case est pressée
+            // on va donc voir la couleur apliqué initlament
+            if (tab_piece[y][x] != nullptr)
+            {
+                ImGui::PopStyleColor();
+            }
 
             ImGui::PopID();
-            if ((compteur + 1) % 8 != 0) /// ou if (x != 7)
+
+            // Pop the button color style if it was pushed
+            if (isWhite)
+            {
+                ImGui::PopStyleColor();
+            }
+
+            if ((compteur + 1) % 8 != 0)
             {
                 ImGui::SameLine();
             }
-            ImGui::PopStyleColor();
-            ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f});
+            // ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f});
             compteur++;
         }
-
-    /* ImGui::SameLine();
-    ImGui::PushID(3);
-    if (ImGui::Button("Yo", ImVec2{50.f, 50.f}))
-        std::cout << "Clicked button 3\n";
-    ImGui::PopID(); */
-    ImGui::PopStyleVar();
+    }
 
     ImGui::PopStyleColor();
+    ImGui::PopStyleVar();
 }
 
 void enable_white_or_black(bool white)
@@ -254,6 +196,7 @@ int main()
             ImGui::Begin("Example");
             // std::cout << "33";
             echequier(tab_piece); // on creer l'echequier avec les bouton et les lettres
+            // drawChessboard(tab_piece);
             // std::cout << "44";
             bool white_time_to_play{true};
             enable_white_or_black(white_time_to_play);
