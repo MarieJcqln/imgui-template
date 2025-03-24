@@ -68,7 +68,9 @@ void Echequier::draw()
     // ImGui::Button("", ImVec2{50.f, 50.f});
 
     // ImGui::PopID(); // Then pop the id you pushed after you created the widget
-    int compteur{0};
+
+    bool hasPushedColor = false; // Vérifier si on a push une couleur
+    int  compteur{0};
     for (int y{0}; y < 8; y++)
     {                              // line
         for (int x{0}; x < 8; x++) // column
@@ -79,6 +81,17 @@ void Echequier::draw()
                 // Apply white background for the white squares
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{1.f, 1.f, 1.f, 1.f});
             }
+            else
+            {
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f}); // Noir
+            }
+
+            // Si on a fait un PushStyleColor(), on fait un PopStyleColor()
+            // if (hasPushedColor)
+            // {
+            //     ImGui::PopStyleColor();
+            //     hasPushedColor = false;
+            // }
 
             ImGui::PushID(compteur);
 
@@ -86,25 +99,6 @@ void Echequier::draw()
 
             // Verifie qu'une piece est sur cette case et on lui applique une couleur a cette case correpondant a la couleur du pion
             // pour l'instant on ne voit pas cette couleur
-            if (tab_piece[y][x] != nullptr)
-            {
-                // Change color based on piece color
-                /// A FAIRE
-                // if (selected(x, y))
-                // {
-                // }
-                // else if (tab_piece[y][x]->m_color == white)
-                if (tab_piece[y][x]->m_color == white)
-                {
-                    // si piece blanche, bouton devient bleu donce
-                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.3f, 1.f}); // bleu foncé
-                }
-                else
-                {
-                    // si pice noire bouton devient bleu clair
-                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.9f, 1.f}); // bleu clair
-                }
-            }
 
             // if (tab_piece[y][x] != nullptr)
             // {
@@ -115,17 +109,32 @@ void Echequier::draw()
             //     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(color.x + 0.2f, color.y + 0.2f, color.z + 0.2f, 1.0f));
             // }
 
+            if (tab_piece[y][x] != nullptr && is_selected && selected_piece_position.x == x && selected_piece_position.y == y)
+            {
+                if (tab_piece[y][x]->m_color == Color::white)
+                {
+                    ImGui::PopStyleColor();                                              // Remove the black/white background
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.5f, 1.f}); // Blue for white pieces
+                    hasPushedColor = true;
+                }
+                else
+                {
+                    ImGui::PopStyleColor();                                              // Remove the black/white background
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.9f, 1.f}); // Light blue for black pieces
+                    hasPushedColor = true;
+                }
+            }
+
             if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))
             {
                 std::cout << "Clicked button " << y << "," << x << std::endl;
 
-                std::cout << "Clicked button " << y << "," << x << std::endl;
                 // Si je click sur une pièce => is_selected = true;
                 // Si is_selected = true, ET que je click sur une une case "nullptr" ET que le mouvement est "légal" => déplacement
                 // si je sélectionne une pièce
-                if (!is_selected)
+                if (!is_selected) // si une piece sur la case actuelle est selectionnée // si l'affirmation dans la parenthese est vrai alors on rentre dans la condition
                 {
-                    if (tab_piece[y][x] != nullptr)
+                    if (tab_piece[y][x] != nullptr) // si case contient un pion
                     {
                         // Position clicked_position = {x,y}
                         //  Elle devient sélectionné.
@@ -158,48 +167,38 @@ void Echequier::draw()
                         tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_piece_position.x]);
                         //  si je click (  if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))) sur une case tab_piece[y][x] = nullptr et que le mouvement est OK
                         //  => La pièce en selected_piece_position bouge sur la case tab_piece[y][x] = nullptr (tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_pice_position.x]))
+                        tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
+                        is_selected                                                     = false;
+                    }
+                    else if (x == selected_piece_position.x && y == selected_piece_position.y)
+                    {
+                        // Added: clicking same piece again deselects it
+                        is_selected = false;
                     }
                 }
-
-                if (tab_piece[y][x] != nullptr)
-                {
-                    std::cout << "Letter: " << tab_piece[y][x]->m_letter << std::endl;
-                    std::cout << "Color: " << tab_piece[y][x]->m_color << std::endl;
-                    // le bouton cliqué change de couleur (bleu foncé)
-                    // utilisé focntion is_cliked()
-
-                    path_choice(); // on montre les différents chemin possible pour le pion cliqué
-                }
-
-                else
-                {
-                    std::cout << "No pawn at this position" << std::endl;
-                }
-            }
-            // pop la couleur de la case quand la case est pressée
-            // on va donc voir la couleur apliqué initlament
-            if (tab_piece[y][x] != nullptr)
-            {
-                ImGui::PopStyleColor();
             }
 
             ImGui::PopID();
+            // pop la couleur de la case quand la case est pressée
+            // on va donc voir la couleur apliqué initlament
+            // if (tab_piece[y][x] != nullptr && is_selected && selected_piece_position.x == x && selected_piece_position.y == y)
+            // {
 
-            // Pop the button color style if it was pushed
-            if (isWhite)
-            {
-                ImGui::PopStyleColor();
-            }
+            // }
+            // Pop la couleur de la case (noir/blanc)
+            ImGui::PopStyleColor();
+
+            // hasPushedColor = false;
 
             if ((compteur + 1) % 8 != 0)
             {
                 ImGui::SameLine();
             }
-            // ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f});
             compteur++;
         }
     }
 
-    ImGui::PopStyleColor();
+    // ImGui::PopStyleColor();
+    ImGui::PopStyleColor(); // Pop the initial button color
     ImGui::PopStyleVar();
 }
