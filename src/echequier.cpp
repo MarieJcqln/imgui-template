@@ -136,7 +136,6 @@ void Echequier::draw()
                 {
                     if (tab_piece[y][x] != nullptr) // si case contient un pion
                     {
-                        // Position clicked_position = {x,y}
                         //  Elle devient sélectionné.
                         is_selected               = true;
                         selected_piece_position.x = x;
@@ -145,8 +144,6 @@ void Echequier::draw()
                         //  Affichage de la position de la pièce sélectionnée
                         std::cout << "Letter: " << tab_piece[y][x]->m_letter << std::endl;
                         std::cout << "Color: " << tab_piece[y][x]->m_color << std::endl;
-
-                        // le bouton change de couleur (bleu foncé)
 
                         // ICI Marie du futur : il faut continuer les fonctions gérant les moves en faisant attention aux doubles dépendances (résolu par max)
                         //  path_choice(); // on montre les différents chemin possible pour le pion cliqué
@@ -172,23 +169,15 @@ void Echequier::draw()
                     }
                     else if (x == selected_piece_position.x && y == selected_piece_position.y)
                     {
-                        // Added: clicking same piece again deselects it
+                        // si la même case est selectionnée => on eneleve la selection et donc la couleur
                         is_selected = false;
                     }
                 }
             }
 
             ImGui::PopID();
-            // pop la couleur de la case quand la case est pressée
-            // on va donc voir la couleur apliqué initlament
-            // if (tab_piece[y][x] != nullptr && is_selected && selected_piece_position.x == x && selected_piece_position.y == y)
-            // {
 
-            // }
-            // Pop la couleur de la case (noir/blanc)
             ImGui::PopStyleColor();
-
-            // hasPushedColor = false;
 
             if ((compteur + 1) % 8 != 0)
             {
