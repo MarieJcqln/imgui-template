@@ -1,4 +1,6 @@
 #include "echequier.hpp"
+#include "piece.hpp"
+#include "utils.hpp"
 
 void Echequier::initialize_array()
 {
@@ -35,7 +37,7 @@ void Echequier::initialize_array()
     tab_piece[7][7] = std::make_unique<Tower>(Color::white);  // T
 }
 
-void enable_white_or_black(bool white)
+void enable_white_or_black(bool white) // pas besoin
 {
     // const bool itemHovered = ImGui::IsItemHoveredRect() && ImGui::IsWindowHovered();
     if (white == true)
@@ -125,6 +127,9 @@ void Echequier::draw()
                 }
             }
 
+            if (is_selected)
+                afficher_moves_possible(tab_piece[selected_piece_position.y][selected_piece_position.x]->moves_possible(selected_piece_position, *this), x, y);
+
             if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))
             {
                 std::cout << "Clicked button " << y << "," << x << std::endl;
@@ -148,7 +153,8 @@ void Echequier::draw()
                         // ICI Marie du futur : il faut continuer les fonctions gérant les moves en faisant attention aux doubles dépendances (résolu par max)
                         //  path_choice(); // on montre les différents chemin possible pour le pion cliqué
 
-                        // appeler moves possible
+                        // ICI
+                        // afficher_moves_possible(tab_piece[y][x]->moves_possible(selected_piece_position, *this), x, y);
                     }
 
                     else
