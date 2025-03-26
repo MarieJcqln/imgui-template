@@ -42,4 +42,18 @@ target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 # Add quick-imgui library
 add_subdirectory(lib/quick_imgui)
-target_link_libraries(${PROJECT_NAME} PRIVATE quick_imgui::quick_imgui)
+
+
+
+####################
+# target_link_libraries(${PROJECT_NAME} PRIVATE quick_imgui::quick_imgui)
+#########" MODIF CAR ERREUR : error LNK2019: symbole externe non résolu __imp_glDrawArrays référencé dans la fonction "void __cdecl drawOpenGL(void)"
+
+target_link_libraries(SimpleCpp 
+    PRIVATE 
+    quick_imgui 
+    glad 
+    ImGui 
+    glfw 
+    opengl32  # Ajout de la bibliothèque OpenGL
+)

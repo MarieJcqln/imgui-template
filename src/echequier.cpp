@@ -37,10 +37,10 @@ void Echequier::initialize_array()
     tab_piece[7][7] = std::make_unique<Tower>(Color::white);  // T
 }
 
-void enable_white_or_black(bool white) // pas besoin
+void enable_white_or_black(bool isWhiteTurn)
 {
     // const bool itemHovered = ImGui::IsItemHoveredRect() && ImGui::IsWindowHovered();
-    if (white == true)
+    if (isWhiteTurn == true)
     {
         // bool itemHovered = false;
         // Needs the ImRect (bb) and the ID (id):
