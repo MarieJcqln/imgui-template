@@ -119,12 +119,11 @@ int main()
         {
             .init = [&]() {
                 std::cout << "Init OpenGL et Échiquier\n";
-                initOpenGL();                 // Appel de initOpenGL()
-                echequier.initialize_array(); // Initialisation de l'échiquier
-                // glEnable(GL_DEPTH_TEST);      //Active le test de profondeur
+                initOpenGL();                 // appel fonction initOpenGL()
+                echequier.initialize_array(); // initialisation échiquier
             },
             .loop = [&]() {
-                drawOpenGL(); // Affichage OpenGL
+                drawOpenGL(); // affiche rendu OpenGL
 
                 // Dessin de l'échiquier
                 echequier.draw();

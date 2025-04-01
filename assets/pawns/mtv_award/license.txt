@@ -1,0 +1,11 @@
+Model Information:
+* title:	MTV Award
+* source:	https://sketchfab.com/3d-models/mtv-award-15b21bd294da49a98db756acf9bf24da
+* author:	JuanG3D (https://sketchfab.com/juang3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "MTV Award" (https://sketchfab.com/3d-models/mtv-award-15b21bd294da49a98db756acf9bf24da) by JuanG3D (https://sketchfab.com/juang3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

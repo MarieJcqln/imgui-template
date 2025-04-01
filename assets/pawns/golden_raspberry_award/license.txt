@@ -1,0 +1,11 @@
+Model Information:
+* title:	Golden Raspberry Award
+* source:	https://sketchfab.com/3d-models/golden-raspberry-award-f049ede318cb4c968c53129f6d080b92
+* author:	JuanG3D (https://sketchfab.com/juang3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Golden Raspberry Award" (https://sketchfab.com/3d-models/golden-raspberry-award-f049ede318cb4c968c53129f6d080b92) by JuanG3D (https://sketchfab.com/juang3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

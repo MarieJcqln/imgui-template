@@ -1,0 +1,277 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 65534,
+      "max": [
+        2.6040000915527344,
+        -5.020699977874756,
+        -5.08027982711792
+      ],
+      "min": [
+        -5.225510120391846,
+        -5.664889812469482,
+        -7.359799861907959
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 786408,
+      "componentType": 5126,
+      "count": 65534,
+      "max": [
+        1.0,
+        0.36632320284843445,
+        0.9995209574699402
+      ],
+      "min": [
+        -1.0,
+        -0.999959409236908,
+        -0.9810234904289246
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 71814,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572816,
+      "componentType": 5126,
+      "count": 65533,
+      "max": [
+        13.104630470275879,
+        7.335309982299805,
+        22.092859268188477
+      ],
+      "min": [
+        -14.745349884033203,
+        -7.010009765625,
+        -14.470319747924805
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2359212,
+      "componentType": 5126,
+      "count": 65533,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 287256,
+      "componentType": 5125,
+      "count": 184956,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3145608,
+      "componentType": 5126,
+      "count": 9668,
+      "max": [
+        4.462560176849365,
+        -5.109479904174805,
+        -5.497759819030762
+      ],
+      "min": [
+        3.0042500495910645,
+        -5.574530124664307,
+        -6.933489799499512
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3261624,
+      "componentType": 5126,
+      "count": 9668,
+      "max": [
+        1.0,
+        0.24940425157546997,
+        0.9995153546333313
+      ],
+      "min": [
+        -1.0,
+        -0.9998383522033691,
+        -0.9784670472145081
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1027080,
+      "componentType": 5125,
+      "count": 10881,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "JuanG3D (https://sketchfab.com/juang3d)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/golden-palm-award-50ded81de5a045eb9b70a682c96fa7c4",
+      "title": "Golden Palm Award"
+    },
+    "generator": "Sketchfab-12.65.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1070604,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3377640,
+      "byteOffset": 1070604,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 4448244,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Scene_-_Root",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.2711979287,
+          0.2018214291,
+          0.0505397028,
+          1.0
+        ],
+        "roughnessFactor": 0.09
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "PalmeDor3LOGO_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0
+          },
+          "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "PalmeDor3LOGO_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "PalmeDor3LOGO_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "Root"
+    },
+    {
+      "children": [
+        3,
+        4,
+        5
+      ],
+      "name": "PalmeDor3LOGO"
+    },
+    {
+      "mesh": 0,
+      "name": "PalmeDor3LOGO_0"
+    },
+    {
+      "mesh": 1,
+      "name": "PalmeDor3LOGO_0"
+    },
+    {
+      "mesh": 2,
+      "name": "PalmeDor3LOGO_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

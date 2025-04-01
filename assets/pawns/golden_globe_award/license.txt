@@ -1,0 +1,11 @@
+Model Information:
+* title:	Golden Globe Award
+* source:	https://sketchfab.com/3d-models/golden-globe-award-2d8dfe416da84242b72a0b113595d6bd
+* author:	JuanG3D (https://sketchfab.com/juang3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Golden Globe Award" (https://sketchfab.com/3d-models/golden-globe-award-2d8dfe416da84242b72a0b113595d6bd) by JuanG3D (https://sketchfab.com/juang3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

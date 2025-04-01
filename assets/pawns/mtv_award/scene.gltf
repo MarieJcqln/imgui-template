@@ -1,0 +1,295 @@
+{
+  "accessors": [
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 65533,
+      "max": [
+        5.478240013122559,
+        2.906830072402954,
+        6.877309799194336
+      ],
+      "min": [
+        -3.285720109939575,
+        -8.73013973236084,
+        -8.867090225219727
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 786396,
+      "componentType": 5126,
+      "count": 65533,
+      "max": [
+        0.9999908804893494,
+        1.0,
+        0.9999998211860657
+      ],
+      "min": [
+        -0.9999577403068542,
+        -0.9999942183494568,
+        -0.9999977946281433
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 264852,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1572792,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        5.015270233154297,
+        2.44608998298645,
+        6.089600086212158
+      ],
+      "min": [
+        0.06122000142931938,
+        -8.191699981689453,
+        -8.389650344848633
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 2359176,
+      "componentType": 5126,
+      "count": 65532,
+      "max": [
+        0.9999563097953796,
+        0.9999176263809204,
+        0.9999958276748657
+      ],
+      "min": [
+        -0.9999892711639404,
+        -0.9999849796295166,
+        -0.9998986721038818
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1059408,
+      "componentType": 5125,
+      "count": 68742,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3145560,
+      "componentType": 5126,
+      "count": 29508,
+      "max": [
+        4.459070205688477,
+        2.6258699893951416,
+        2.840399980545044
+      ],
+      "min": [
+        -2.012200117111206,
+        -5.00521993637085,
+        -7.301519870758057
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 3499656,
+      "componentType": 5126,
+      "count": 29508,
+      "max": [
+        0.9999901652336121,
+        0.9999988675117493,
+        0.9999852776527405
+      ],
+      "min": [
+        -0.9998539090156555,
+        -0.9997592568397522,
+        -0.9999428391456604
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1334376,
+      "componentType": 5125,
+      "count": 32202,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "JuanG3D (https://sketchfab.com/juang3d)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/mtv-award-15b21bd294da49a98db756acf9bf24da",
+      "title": "MTV Award"
+    },
+    "generator": "Sketchfab-12.65.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1463184,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 3853752,
+      "byteOffset": 1463184,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 5316936,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Scene_-_Root",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.2704977910130658,
+          0.20155625379439718,
+          0.04970656598412723,
+          1.0
+        ],
+        "roughnessFactor": 0.09
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Astronauta",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0
+          },
+          "indices": 2,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Astronauta",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 4,
+            "POSITION": 3
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Astronauta",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 7,
+            "POSITION": 6
+          },
+          "indices": 8,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "Root"
+    },
+    {
+      "children": [
+        3,
+        4,
+        5
+      ],
+      "matrix": [
+        0.94303,
+        0.10377000000000002,
+        -0.31610000000000005,
+        0.0,
+        -0.07796000000000002,
+        0.6729700000000002,
+        -0.011650000000000002,
+        0.0,
+        0.31217000000000006,
+        0.05258000000000001,
+        0.94857,
+        0.0,
+        -2.09855,
+        -0.007040000000000002,
+        1.83874,
+        1.0
+      ],
+      "name": "Astronauta"
+    },
+    {
+      "mesh": 0,
+      "name": "Astronauta"
+    },
+    {
+      "mesh": 1,
+      "name": "Astronauta"
+    },
+    {
+      "mesh": 2,
+      "name": "Astronauta"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Oscar Trophy
+* source:	https://sketchfab.com/3d-models/oscar-trophy-a466f45896814d73b0a91e8fd26ab1af
+* author:	thegraphicsgeek (https://sketchfab.com/thegraphicsgeek)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Oscar Trophy" (https://sketchfab.com/3d-models/oscar-trophy-a466f45896814d73b0a91e8fd26ab1af) by thegraphicsgeek (https://sketchfab.com/thegraphicsgeek) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
