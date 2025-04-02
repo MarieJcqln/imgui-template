@@ -57,3 +57,7 @@ target_link_libraries(SimpleCpp
     glfw 
     opengl32  # Ajout de la bibliothèque OpenGL
 )
+
+# Ajout de la bibliothèque glmax
+add_subdirectory(lib/glmax)
+target_link_libraries(${PROJECT_NAME} PRIVATE glmax)
