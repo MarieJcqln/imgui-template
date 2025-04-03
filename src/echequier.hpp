@@ -5,6 +5,7 @@
 #include <iostream>
 #include <list>
 #include <utility>
+#include "helper.hpp"
 #include "piece.hpp"
 #include "quick_imgui/quick_imgui.hpp"
 #include "utils.hpp"

@@ -37,6 +37,8 @@ void Echequier::initialize_array()
     tab_piece[7][7] = std::make_unique<Tower>(Color::white);  // T
 }
 
+// revoir le fonctionnement ci-dessous (utiliser un booléen plutôt)
+
 void enable_white_or_black(bool isWhiteTurn)
 {
     // const bool itemHovered = ImGui::IsItemHoveredRect() && ImGui::IsWindowHovered();
@@ -149,12 +151,6 @@ void Echequier::draw()
                         //  Affichage de la position de la pièce sélectionnée
                         std::cout << "Letter: " << tab_piece[y][x]->m_letter << std::endl;
                         std::cout << "Color: " << tab_piece[y][x]->m_color << std::endl;
-
-                        // ICI Marie du futur : il faut continuer les fonctions gérant les moves en faisant attention aux doubles dépendances (résolu par max)
-                        //  path_choice(); // on montre les différents chemin possible pour le pion cliqué
-
-                        // ICI
-                        // afficher_moves_possible(tab_piece[y][x]->moves_possible(selected_piece_position, *this), x, y);
                     }
 
                     else
@@ -162,11 +158,13 @@ void Echequier::draw()
                         std::cout << "No pawn at this position" << std::endl;
                     }
                 }
+
                 else if (is_selected)
                 {
                     if (tab_piece[y][x] == nullptr)
                     {
-                        // si le move est ok
+                        // ICI reste à faire :
+                        //  si le move est ok
                         tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_piece_position.x]);
                         //  si je click (  if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))) sur une case tab_piece[y][x] = nullptr et que le mouvement est OK
                         //  => La pièce en selected_piece_position bouge sur la case tab_piece[y][x] = nullptr (tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_pice_position.x]))
