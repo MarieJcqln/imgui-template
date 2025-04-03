@@ -18,38 +18,38 @@
 // Variables OpenGL
 GLuint vao, vbo; // Pour stocker les objets OpenGL
 
-// Fonction d'initialisation OpenGL
-void initOpenGL()
-{
-    std::cout << "Initialisation OpenGL..." << std::endl;
+// // Fonction d'initialisation OpenGL
+// void initOpenGL()
+// {
+//     std::cout << "Initialisation OpenGL..." << std::endl;
 
-    // Activer le test de profondeur
-    glEnable(GL_DEPTH_TEST);
+//     // Activer le test de profondeur
+//     glEnable(GL_DEPTH_TEST);
 
-    // Création d'un VAO (Vertex Array Object)
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+//     // Création d'un VAO (Vertex Array Object)
+//     glGenVertexArrays(1, &vao);
+//     glBindVertexArray(vao);
 
-    // Création d'un VBO (Vertex Buffer Object)
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+//     // Création d'un VBO (Vertex Buffer Object)
+//     glGenBuffers(1, &vbo);
+//     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    // Exemple de données pour un simple triangle (à remplacer par ton échiquier 3D)
-    float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // Bas gauche
-        0.5f, -0.5f, 0.0f,  // Bas droit
-        0.0f, 0.5f, 0.0f    // Haut
-    };
+//     // Exemple de données pour un simple triangle (à remplacer par ton échiquier 3D)
+//     float vertices[] = {
+//         -0.5f, -0.5f, 0.0f, // Bas gauche
+//         0.5f, -0.5f, 0.0f,  // Bas droit
+//         0.0f, 0.5f, 0.0f    // Haut
+//     };
 
-    // Charger les données dans le VBO
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+//     // Charger les données dans le VBO
+//     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // Activer et spécifier l'attribut de position (index 0)
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+//     // Activer et spécifier l'attribut de position (index 0)
+//     glEnableVertexAttribArray(0);
+//     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-    glBindVertexArray(0); // Débind
-}
+//     glBindVertexArray(0); // Débind
+// }
 
 // Fonction de rendu OpenGL
 void drawOpenGL()
@@ -57,10 +57,6 @@ void drawOpenGL()
     glClearColor(0.847f, 0.82f, 0.929f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Nettoyage écran
     glEnable(GL_DEPTH_TEST);
-    // Dessiner un simple triangle (remplace ça par ton échiquier)
-    glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glBindVertexArray(0);
 }
 
 int main()
@@ -71,7 +67,12 @@ int main()
     glmax::Shader shader;
     glmax::Camera camera{true};
 
-    Model3D model;
+    Model3D model1;
+    Model3D model2;
+    // Model3D model3;
+    // Model3D model4;
+    // Model3D model5;
+    Model3D model6;
     ////
     Echequier echequier;
 
@@ -84,9 +85,20 @@ int main()
                 echequier.initialize_array(); // initialisation échiquier
                 //////// CHARGER LES MODEL 3D//////:
                 shader.load_shader("model.vs.glsl", "model.fs.glsl");
-                // model.load_mesh("creeper/creeper.obj", "creeper");
-                model.load_mesh("pawn/pawn.obj", "pawn");
-                model.setup_buffers();
+
+                // model1.load_mesh("grammy_award_6/grammy_award_6.obj", "grammy_award_6"); // ne le faire qu'une fois pour chaque type de pièce
+                // model2.load_mesh("golden_ball/golden_ball.obj", "golden_ball");
+                model1.load_mesh("oscar_award/oscar_award.obj", "oscar_award");
+                model2.load_mesh("grammy_award/grammy_award.obj", "grammy_award");
+                // model3.load_mesh("mtv_award_3/mtv_award.obj", "mtv_award");
+                // model4.load_mesh("golden_raspberry/golden_raspberry.obj", "golden_raspberry");
+
+                model1.setup_buffers();
+                model2.setup_buffers();
+                // model3.setup_buffers();
+                // model4.setup_buffers();
+                // model5.setup_buffers();
+                model6.setup_buffers();
                 ///////////////
             },
             .loop = [&]() {
@@ -109,7 +121,12 @@ int main()
                 shader.set_uniform_3fv("viewPos", camera.get_position());
                 
                 //MODEL RENDER
-                model.render(shader); 
+                model1.render(shader); 
+                model2.render(shader); 
+                // model3.render(shader); 
+                // model4.render(shader); 
+                // model5.render(shader); 
+                model6.render(shader); 
                 /////////////////////////////
 /////////
                 // Dessin de l'échiquier
