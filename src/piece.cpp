@@ -105,16 +105,42 @@ void moves_diagonal(position piece_position, std::vector<position>& list_moves, 
 std::vector<position> Pawn::moves_possible(position piece_position, Echequier& echequier)
 {
     std::vector<position> list_moves{};
-    // vérifier si la case est vide et sa couleur pour avancer dans le bon sens
-    // on vérifie aussi si on reste sur l'échequier
-    if ((piece_position.y - 1) >= 0 && m_color == white && echequier.tab_piece[piece_position.x][piece_position.y - 1] == nullptr)
+    int                   direction = (m_color == white) ? -1 : 1; // Blancs montent (-1), Noirs descendent (+1)
+
+    int x = piece_position.x;
+    int y = piece_position.y;
+
+    // Déplacement simple
+    if ((y + direction) >= 0 && (y + direction) < 8 && echequier.tab_piece[y + direction][x] == nullptr)
     {
-        list_moves.emplace_back(piece_position.x, piece_position.y - 1); // emplace back = pushback
+        list_moves.emplace_back(x, y + direction);
+
+        // Déplacement double depuis la position initiale
+        if ((m_color == white && y == 6) || (m_color == black && y == 1))
+        {
+            if (echequier.tab_piece[y + 2 * direction][x] == nullptr)
+            {
+                list_moves.emplace_back(x, y + 2 * direction);
+            }
+        }
     }
-    else if ((piece_position.y + 1) >= 0 && m_color == black && echequier.tab_piece[piece_position.x][piece_position.y + 1] == nullptr)
+
+    // Capture diagonale
+    /* for (int dx : {-1, 1})
     {
-        list_moves.emplace_back(piece_position.x, piece_position.y + 1);
-    }
+        int newX = x + dx;
+        int newY = y + direction;
+
+        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8)
+        {
+            Piece* target = echequier.tab_piece[newX][newY];
+            if (target != nullptr && target->m_color != m_color)
+            {
+                list_moves.emplace_back(newX, newY);
+            }
+        }
+    } */
+
     return list_moves;
 }
 
