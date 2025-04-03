@@ -8,7 +8,7 @@ void moves_straight(position piece_position, std::vector<position>& list_moves, 
     int y = piece_position.y;
 
     // Vérifier que la case initiale contient bien une pièce
-    if (echequier.tab_piece[x][y] == nullptr)
+    if (echequier.tab_piece[y][x] == nullptr)
         return;
 
     // Récupération de la couleur de la pièce actuelle
@@ -32,10 +32,10 @@ void moves_straight(position piece_position, std::vector<position>& list_moves, 
 
         while (newX >= 0 && newX < 8 && newY >= 0 && newY < 8)
         {
-            if (echequier.tab_piece[newX][newY] != nullptr)
+            if (echequier.tab_piece[newY][newX] != nullptr)
             {
                 // Si c'est une pièce adverse, on peut capturer
-                if (echequier.tab_piece[newX][newY]->m_color != piece_color)
+                if (echequier.tab_piece[newY][newX]->m_color != piece_color)
                 {
                     list_moves.emplace_back(newX, newY);
                 }
@@ -58,11 +58,11 @@ void moves_diagonal(position piece_position, std::vector<position>& list_moves, 
     int y = piece_position.y;
 
     // Vérifier que la case initiale contient bien une pièce
-    if (echequier.tab_piece[x][y] == nullptr)
+    if (echequier.tab_piece[y][x] == nullptr)
         return;
 
     // Récupération de la couleur de la pièce actuelle
-    Color piece_color = echequier.tab_piece[x][y]->m_color;
+    Color piece_color = echequier.tab_piece[y][x]->m_color;
 
     // Déplacements diagonaux : {dx, dy}
     int directions[4][2] = {
@@ -82,10 +82,10 @@ void moves_diagonal(position piece_position, std::vector<position>& list_moves, 
 
         while (newX >= 0 && newX < 8 && newY >= 0 && newY < 8)
         {
-            if (echequier.tab_piece[newX][newY] != nullptr)
+            if (echequier.tab_piece[newY][newX] != nullptr)
             {
                 // Si c'est une pièce adverse, on peut capturer
-                if (echequier.tab_piece[newX][newY]->m_color != piece_color)
+                if (echequier.tab_piece[newY][newX]->m_color != piece_color)
                 {
                     list_moves.emplace_back(newX, newY);
                 }
@@ -162,41 +162,30 @@ std::vector<position> Horse::moves_possible(position piece_position, Echequier& 
 {
     std::vector<position> list_moves{};
 
-    // Avance en L
-    // on vérifie si les cases sont vides et pas en dehors de l'echequier
-    // ICI il manque des cas
-    if ((piece_position.y + 1) < 8 && (piece_position.x + 2) < 8 && echequier.tab_piece[piece_position.x + 2][piece_position.y + 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x + 2, piece_position.y + 1);
-    }
-    if ((piece_position.y - 1) >= 0 && (piece_position.x + 2) < 8 && echequier.tab_piece[piece_position.x + 2][piece_position.y - 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x + 2, piece_position.y - 1);
-    }
-    if ((piece_position.y + 1) < 8 && (piece_position.x - 2) >= 0 && echequier.tab_piece[piece_position.x - 2][piece_position.y + 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 2, piece_position.y + 1);
-    }
-    if ((piece_position.y - 1) >= 0 && (piece_position.x - 2) >= 0 && echequier.tab_piece[piece_position.x - 2][piece_position.y - 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 2, piece_position.y - 1);
-    }
+    // Définir tous les déplacements possibles d'un cavalier (8 directions)
+    const int moves[8][2] = {
+        {2, 1}, {2, -1}, {-2, 1}, {-2, -1}, // Déplacements de 2 cases en x et 1 en y
+        {1, 2},
+        {1, -2},
+        {-1, 2},
+        {-1, -2} // Déplacements de 2 cases en y et 1 en x
+    };
 
-    if ((piece_position.x + 1) < 8 && (piece_position.y + 2) < 8 && echequier.tab_piece[piece_position.x + 1][piece_position.y + 2] == nullptr)
+    // Vérifier tous les déplacements possibles
+    for (const auto& move : moves)
     {
-        list_moves.emplace_back(piece_position.x + 1, piece_position.y + 2);
-    }
-    if ((piece_position.x - 1) >= 0 && (piece_position.y + 2) < 8 && echequier.tab_piece[piece_position.x - 1][piece_position.y + 2] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 1, piece_position.y + 2);
-    }
-    if ((piece_position.x + 1) < 8 && (piece_position.y - 2) >= 0 && echequier.tab_piece[piece_position.x + 1][piece_position.y - 2] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x + 1, piece_position.y - 2);
-    }
-    if ((piece_position.x - 1) >= 0 && (piece_position.y - 2) >= 0 && echequier.tab_piece[piece_position.x - 1][piece_position.y - 2] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 1, piece_position.y - 2);
+        int new_x = piece_position.x + move[0];
+        int new_y = piece_position.y + move[1];
+
+        // Vérifier que les nouveaux indices sont dans les bornes de l'échiquier
+        if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8)
+        {
+            // Vérifier si la case cible est vide
+            if (echequier.tab_piece[new_y][new_x] == nullptr)
+            {
+                list_moves.emplace_back(new_x, new_y);
+            }
+        }
     }
 
     return list_moves;
@@ -219,36 +208,36 @@ std::vector<position> King::moves_possible(position piece_position, Echequier& e
 
     // Avance de 1 dans toutes les directions
     // on vérifie si les cases sont vides et dans l'échequier
-    if ((piece_position.x + 1) < 8 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.x + 1][piece_position.y + 1] == nullptr)
+    if ((piece_position.x + 1) < 8 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x + 1] == nullptr)
     {
         list_moves.emplace_back(piece_position.x + 1, piece_position.y + 1);
     }
-    if ((piece_position.x - 1) >= 0 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.x - 1][piece_position.y - 1] == nullptr)
+    if ((piece_position.x - 1) >= 0 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x - 1] == nullptr)
     {
         list_moves.emplace_back(piece_position.x - 1, piece_position.y - 1);
     }
-    if ((piece_position.x + 1) < 8 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.x + 1][piece_position.y - 1] == nullptr)
+    if ((piece_position.x + 1) < 8 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x + 1] == nullptr)
     {
         list_moves.emplace_back(piece_position.x + 1, piece_position.y - 1);
     }
-    if ((piece_position.x - 1) >= 0 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.x - 1][piece_position.y + 1] == nullptr)
+    if ((piece_position.x - 1) >= 0 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x - 1] == nullptr)
     {
         list_moves.emplace_back(piece_position.x - 1, piece_position.y + 1);
     }
 
-    if ((piece_position.x + 1) < 8 && echequier.tab_piece[piece_position.x + 1][piece_position.y] == nullptr)
+    if ((piece_position.x + 1) < 8 && echequier.tab_piece[piece_position.y][piece_position.x + 1] == nullptr)
     {
         list_moves.emplace_back(piece_position.x + 1, piece_position.y);
     }
-    if ((piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.x][piece_position.y + 1] == nullptr)
+    if ((piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x] == nullptr)
     {
         list_moves.emplace_back(piece_position.x, piece_position.y + 1);
     }
-    if ((piece_position.x - 1) >= 0 && echequier.tab_piece[piece_position.x - 1][piece_position.y] == nullptr)
+    if ((piece_position.x - 1) >= 0 && echequier.tab_piece[piece_position.y][piece_position.x - 1] == nullptr)
     {
         list_moves.emplace_back(piece_position.x - 1, piece_position.y);
     }
-    if ((piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.x][piece_position.y - 1] == nullptr)
+    if ((piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x] == nullptr)
     {
         list_moves.emplace_back(piece_position.x, piece_position.y - 1);
     }
