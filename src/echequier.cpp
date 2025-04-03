@@ -1,4 +1,5 @@
 #include "echequier.hpp"
+#include "helper.hpp"
 #include "piece.hpp"
 #include "utils.hpp"
 
@@ -35,28 +36,6 @@ void Echequier::initialize_array()
     tab_piece[7][5] = std::make_unique<Bishop>(Color::white); // F
     tab_piece[7][6] = std::make_unique<Horse>(Color::white);  // C
     tab_piece[7][7] = std::make_unique<Tower>(Color::white);  // T
-}
-
-// revoir le fonctionnement ci-dessous (utiliser un booléen plutôt)
-
-void enable_white_or_black(bool isWhiteTurn)
-{
-    // const bool itemHovered = ImGui::IsItemHoveredRect() && ImGui::IsWindowHovered();
-    if (isWhiteTurn == true)
-    {
-        // bool itemHovered = false;
-        // Needs the ImRect (bb) and the ID (id):
-        // ImGui::ButtonBehavior(bb, id, &itemHovered, NULL);
-        // on "desactive" le jeu des noirs
-        // on appelle la class pour pion blanc
-        // enlever le hover des noirs
-    }
-    else
-    {
-        // on "desactive" le jeu des blancs
-        // on appelle la class pour pion noir
-        // enlever le hover des blancs
-    }
 }
 
 void path_choice() {}
@@ -130,8 +109,9 @@ void Echequier::draw()
             }
 
             if (is_selected)
+            {
                 afficher_moves_possible(tab_piece[selected_piece_position.y][selected_piece_position.x]->moves_possible(selected_piece_position, *this), x, y);
-
+            }
             if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))
             {
                 std::cout << "Clicked button " << y << "," << x << std::endl;
@@ -147,6 +127,7 @@ void Echequier::draw()
                         is_selected               = true;
                         selected_piece_position.x = x;
                         selected_piece_position.y = y;
+
                         // si clic droit => désélectionné
                         //  Affichage de la position de la pièce sélectionnée
                         std::cout << "Letter: " << tab_piece[y][x]->m_letter << std::endl;
@@ -161,15 +142,25 @@ void Echequier::draw()
 
                 else if (is_selected)
                 {
-                    if (tab_piece[y][x] == nullptr)
+                    auto Moves{tab_piece[selected_piece_position.y][selected_piece_position.x]->moves_possible(selected_piece_position, *this)};
+
+                    // Affichage des mouvements possibles
+                    std::cout << "Moves: ";
+                    for (const auto& move : Moves)
                     {
-                        // ICI reste à faire :
-                        //  si le move est ok
+                        std::cout << move << " "; // Utilise l'opérateur << surchargé pour position
+                    }
+                    std::cout << '\n';
+
+                    if (tab_piece[y][x] == nullptr && verification(white_turn, Moves, tab_piece[selected_piece_position.y][selected_piece_position.x]->m_color == white, x, y))
+                    {
                         tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_piece_position.x]);
                         //  si je click (  if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))) sur une case tab_piece[y][x] = nullptr et que le mouvement est OK
                         //  => La pièce en selected_piece_position bouge sur la case tab_piece[y][x] = nullptr (tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_pice_position.x]))
                         tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
                         is_selected                                                     = false;
+                        white_turn                                                      = !white_turn;
+                        // fin du tour
                     }
                     else if (x == selected_piece_position.x && y == selected_piece_position.y)
                     {

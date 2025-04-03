@@ -10,8 +10,6 @@
 #include "quick_imgui/quick_imgui.hpp"
 #include "utils.hpp"
 
-void enable_white_or_black(bool white);
-
 class Piece;
 
 class Echequier {
@@ -26,4 +24,5 @@ public:
     // Position de la pièce sélectionnée :
     position selected_piece_position;
     bool     is_selected = false;
+    bool     white_turn  = true;
 };

@@ -11,6 +11,7 @@
 #include "Shader.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/fwd.hpp"
+#include "math.hpp"
 #include "piece.hpp"
 #include "quick_imgui/quick_imgui.hpp"
 
@@ -114,13 +115,6 @@ int main()
                 // Dessin de l'échiquier
                 echequier.draw();
 
-                // Gestion du tour du joueur
-                bool white_time_to_play{true};
-                enable_white_or_black(white_time_to_play);
-                if (!white_time_to_play)
-                {
-                    enable_white_or_black(white_time_to_play);
-                }
 
                 // Interface ImGui
                 ImGui::Begin("Options");
@@ -136,6 +130,11 @@ int main()
             .window_size_callback = [](int width, int height) { std::cout << "Resized: " << width << ' ' << height << '\n'; },
         }
     );
+
+    // Test des fonctions
+    std::cout << "Loi uniforme (0, 1) : " << random_uniform(0.0, 1.0) << std::endl;
+    std::cout << "Loi normale (moyenne = 0, écart-type = 1) : " << random_normal(0.0, 1.0) << std::endl;
+    std::cout << "Loi exponentielle (lambda = 1.0) : " << random_exponential(1.0) << std::endl;
 
     return 0;
 }

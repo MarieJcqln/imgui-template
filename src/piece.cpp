@@ -2,42 +2,6 @@
 #include "echequier.hpp"
 #include "utils.hpp"
 
-// On va passer en paramètre un board (class) qui contient info du board
-/* void moves_straight(position piece_position, std::vector<position>& list_moves, Echequier& echequier)
-{
-    // Avance en ligne jusqu'à rencontrer une piece
-    int i{0};
-
-    while (((echequier.selected_piece_position.y) + i) < 8 && echequier.tab_piece[echequier.selected_piece_position.x][(echequier.selected_piece_position.y) + i] == nullptr) // et sur le plateu
-    {
-        // pas de pièce au dessus
-        // on ajoute à la liste la case disponible
-        list_moves.emplace_back(piece_position.x, piece_position.y + i);
-        i++;
-    }
-    while (((echequier.selected_piece_position.y) - i) >= 0 && echequier.tab_piece[echequier.selected_piece_position.x][(echequier.selected_piece_position.y) - i] == nullptr)
-    {
-        // pas de pièce en dessous
-        list_moves.emplace_back(piece_position.x, piece_position.y - i);
-        i++;
-    }
-    while (((echequier.selected_piece_position.x) + i) < 8 && echequier.tab_piece[(echequier.selected_piece_position.x) + i][echequier.selected_piece_position.y] == nullptr)
-    {
-        // pas de pièce à droite
-        list_moves.emplace_back(piece_position.x + i, piece_position.y);
-        i++;
-    }
-    while (((echequier.selected_piece_position.x) - i) >= 0 && echequier.tab_piece[(echequier.selected_piece_position.x) - i][echequier.selected_piece_position.y] == nullptr)
-    {
-        // pas de pièce à gauche
-        list_moves.emplace_back(piece_position.x - i, piece_position.y);
-        i++;
-    }
-
-    // la list_moves est modifié et peut être utilisée par la suite
-}
- */
-
 void moves_straight(position piece_position, std::vector<position>& list_moves, Echequier& echequier)
 {
     int x = piece_position.x;
@@ -88,56 +52,6 @@ void moves_straight(position piece_position, std::vector<position>& list_moves, 
     }
 }
 
-/* void moves_diagonal(position piece_position, std::vector<position>& list_moves, Echequier& echequier)
-{
-    int x = piece_position.x;
-    int y = piece_position.y;
-    // Pb aux bords
-
-    // Haut-Droite
-    for (int i = 1; (x + i) < 8 && (y + i) < 8; i++)
-    {
-        if (echequier.tab_piece[x + i][y + i] != nullptr) // Vérification après bornes
-        {
-            list_moves.emplace_back(x + i, y + i);
-            break;
-        }
-        // list_moves.emplace_back(x + i, y + i);
-    }
-
-    // Haut-Gauche
-    for (int i = 1; (x - i) >= 0 && (y + i) < 8; i++)
-    {
-        if (echequier.tab_piece[x - i][y + i] != nullptr)
-        {
-            list_moves.emplace_back(x - i, y + i);
-            break;
-        }
-        // list_moves.emplace_back(x - i, y + i);
-    }
-
-    // Bas-Droite
-    for (int i = 1; (x + i) < 8 && (y - i) >= 0; i++)
-    {
-        if (echequier.tab_piece[x + i][y - i] != nullptr)
-        {
-            list_moves.emplace_back(x + i, y - i);
-            break;
-        }
-        // list_moves.emplace_back(x + i, y - i);
-    }
-
-    // Bas-Gauche
-    for (int i = 1; (x - i) >= 0 && (y - i) >= 0; i++)
-    {
-        if (echequier.tab_piece[x - i][y - i] != nullptr)
-        {
-            list_moves.emplace_back(x - i, y - i);
-            break;
-        }
-        // list_moves.emplace_back(x - i, y - i);
-    }
-} */
 void moves_diagonal(position piece_position, std::vector<position>& list_moves, Echequier& echequier)
 {
     int x = piece_position.x;
