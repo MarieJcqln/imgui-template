@@ -61,10 +61,23 @@ void drawOpenGL()
     glEnable(GL_DEPTH_TEST);
 }
 
-void place_piece(Model3D& model, int x, int z, float spacing = 1.0f)
+void place_piece(Model3D& model, int x, int z, bool is_white = false, float spacing = 1.0f)
 {
+    // symétrie sur l'axe Z pour les blancs
+    if (is_white)
+    {
+        z = 7 - z;
+    }
+
     glm::vec3 position  = glm::vec3(x * spacing, 0.0f, z * spacing);
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+
+    // rotation des blancs pour qu’ils soient face aux noirs
+    if (is_white)
+    {
+        transform = glm::rotate(transform, glm::radians(180.0f), glm::vec3(0, 1, 0));
+    }
+
     model.add_instance(transform);
 }
 
@@ -82,6 +95,7 @@ int main()
     Model3D model4;
     Model3D model5;
     Model3D model6;
+    Model3D model7;
     ////
     Echequier echequier;
 
@@ -104,6 +118,7 @@ int main()
                 model4.load_mesh("golden_disk/golden_disk.obj", "golden_disk");
                 model5.load_mesh("golden_palm/golden_palm.obj", "golden_palm");
                 model6.load_mesh("golden_globe/golden_globe.obj", "golden_globe");
+                model7.load_mesh("chessboard/chessboard.obj", "chessboard");
 
                 model1.setup_buffers();
                 model2.setup_buffers();
@@ -111,42 +126,44 @@ int main()
                 model4.setup_buffers();
                 model5.setup_buffers();
                 model6.setup_buffers();
+                model7.setup_buffers();
                 ///////////////
+                model7.add_instance(glm::translate(glm::mat4(1.0f), glm::vec3(3.5f, -0.0, 3.5f))); // si on le met pas ca n'affiche pas le plateau // le 0 sert pour descendre ou monter le plateau dans l'axe des z //3.5 pour centrer le plateau 7/2 = 3.5
 
                 float spacing = 1.0f; /// distance entre les cases
 
                 // placmeent des pions (ligne 1 pour les noirs, ligne 6 pour lesblancs)
                 for (int i = 0; i < 8; ++i)
                 {
-                    place_piece(model5, i, 1); // noir
-                    place_piece(model5, i, 6); // blanc
+                    place_piece(model5, i, 1);       // noir
+                    place_piece(model5, i, 1, true); // blanc (symetrie de ligne 1 = ligne 6)
                 }
 
                 // TOURS (model6)
                 place_piece(model6, 0, 0); // noir
                 place_piece(model6, 7, 0); // noir
-                place_piece(model6, 0, 7);
-                place_piece(model6, 7, 7);
+                place_piece(model6, 0, 0, true);
+                place_piece(model6, 7, 0, true);
 
                 // CAVALIERS (model3)
                 place_piece(model3, 1, 0); // noir
                 place_piece(model3, 6, 0); // noir
-                place_piece(model3, 1, 7);
-                place_piece(model3, 6, 7);
+                place_piece(model3, 1, 0, true);
+                place_piece(model3, 6, 0, true);
 
                 // FOUS (model2)
                 place_piece(model2, 2, 0); // noir
                 place_piece(model2, 5, 0); // noir
-                place_piece(model2, 2, 7);
-                place_piece(model2, 5, 7);
+                place_piece(model2, 2, 0, true);
+                place_piece(model2, 5, 0, true);
 
                 // REINES (model4)
-                place_piece(model4, 3, 0); // noirs
-                place_piece(model4, 3, 7); // blanc
+                place_piece(model4, 3, 0); // noir
+                place_piece(model4, 3, 0, true);
 
                 // ROIS (model1)
-                place_piece(model1, 4, 0); // noir
-                place_piece(model1, 4, 7); // blanc
+                place_piece(model1, 4, 0);       // noir
+                place_piece(model1, 4, 0, true); //
             },
             .loop = [&]() {
                 drawOpenGL(); // affiche rendu OpenGL
@@ -174,6 +191,7 @@ int main()
                 model4.render(shader); 
                 model5.render(shader); 
                 model6.render(shader); 
+                model7.render(shader); 
                 /////////////////////////////
 /////////
                 // Dessin de l'échiquier
