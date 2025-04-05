@@ -43,35 +43,43 @@ void Model3D::render(glmax::Shader& shader) const
 {
     m_vao.bind();
 
-    for (const glmax::Submesh& submesh : m_mesh.get_submeshes())
+    for (const glm::mat4& model_matrix : m_instances)
     {
-        const glmax::Material& material = m_mesh.get_materials().at(submesh.m_material_id);
+        shader.set_uniform_matrix_4fv("model", model_matrix); /// chaque pièce a sa propre transformation
 
-        // Configurer les uniformes pour les propriétés du matériau
-        shader.set_uniform_3fv("Kd", material.m_Kd);
-        shader.set_uniform_3fv("Ka", material.m_Ka);
-        shader.set_uniform_3fv("Ks", material.m_Ks);
-        shader.set_uniform_1f("Ns", material.m_Ns);
-
-        if (material.m_hasMapKd)
+        for (const glmax::Submesh& submesh : m_mesh.get_submeshes())
         {
-            shader.set_uniform_1i("map_Kd", material.m_mapKd.getID());
-            material.m_mapKd.bind(material.m_mapKd.getID());
-            shader.set_uniform_1i("useTexture", true);
-        }
-        else
-        {
-            shader.set_uniform_1i("useTexture", false);
-        }
+            const glmax::Material& material = m_mesh.get_materials().at(submesh.m_material_id);
 
-        // On dessine !
-        glDrawElements(GL_TRIANGLES, submesh.m_index_count, GL_UNSIGNED_INT, (const GLvoid*)(submesh.m_index_offset * sizeof(uint32_t)));
+            // Configurer les uniformes pour les propriétés du matériau
+            shader.set_uniform_3fv("Kd", material.m_Kd);
+            shader.set_uniform_3fv("Ka", material.m_Ka);
+            shader.set_uniform_3fv("Ks", material.m_Ks);
+            shader.set_uniform_1f("Ns", material.m_Ns);
 
-        if (material.m_hasMapKd)
-            material.m_mapKd.unbind();
+            if (material.m_hasMapKd)
+            {
+                shader.set_uniform_1i("map_Kd", material.m_mapKd.getID());
+                material.m_mapKd.bind(material.m_mapKd.getID());
+                shader.set_uniform_1i("useTexture", true);
+            }
+            else
+            {
+                shader.set_uniform_1i("useTexture", false);
+            }
+
+            // On dessine !
+            glDrawElements(GL_TRIANGLES, submesh.m_index_count, GL_UNSIGNED_INT, (const GLvoid*)(submesh.m_index_offset * sizeof(uint32_t)));
+
+            if (material.m_hasMapKd)
+                material.m_mapKd.unbind();
+        }
     }
 
     m_vao.unbind();
 }
 
-// void model_matrice() {}
+void Model3D::add_instance(const glm::mat4& transform)
+{
+    m_instances.push_back(transform);
+}

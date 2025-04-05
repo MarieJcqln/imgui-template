@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <array>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp> //pour glm::translate, rotate, scale
+#include <glm/gtc/type_ptr.hpp>         //pour passage de smatrice au shader
 #include <iostream>
 #include <list>
 #include "Camera.hpp"
@@ -59,6 +61,13 @@ void drawOpenGL()
     glEnable(GL_DEPTH_TEST);
 }
 
+void place_piece(Model3D& model, int x, int z, float spacing = 1.0f)
+{
+    glm::vec3 position  = glm::vec3(x * spacing, 0.0f, z * spacing);
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+    model.add_instance(transform);
+}
+
 int main()
 {
     // CHARGER LES MODEL 3D
@@ -103,6 +112,41 @@ int main()
                 model5.setup_buffers();
                 model6.setup_buffers();
                 ///////////////
+
+                float spacing = 1.0f; /// distance entre les cases
+
+                // placmeent des pions (ligne 1 pour les noirs, ligne 6 pour lesblancs)
+                for (int i = 0; i < 8; ++i)
+                {
+                    place_piece(model5, i, 1); // noir
+                    place_piece(model5, i, 6); // blanc
+                }
+
+                // TOURS (model6)
+                place_piece(model6, 0, 0); // noir
+                place_piece(model6, 7, 0); // noir
+                place_piece(model6, 0, 7);
+                place_piece(model6, 7, 7);
+
+                // CAVALIERS (model3)
+                place_piece(model3, 1, 0); // noir
+                place_piece(model3, 6, 0); // noir
+                place_piece(model3, 1, 7);
+                place_piece(model3, 6, 7);
+
+                // FOUS (model2)
+                place_piece(model2, 2, 0); // noir
+                place_piece(model2, 5, 0); // noir
+                place_piece(model2, 2, 7);
+                place_piece(model2, 5, 7);
+
+                // REINES (model4)
+                place_piece(model4, 3, 0); // noirs
+                place_piece(model4, 3, 7); // blanc
+
+                // ROIS (model1)
+                place_piece(model1, 4, 0); // noir
+                place_piece(model1, 4, 7); // blanc
             },
             .loop = [&]() {
                 drawOpenGL(); // affiche rendu OpenGL

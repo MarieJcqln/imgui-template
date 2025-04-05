@@ -13,7 +13,8 @@ public:
     void load_mesh(const std::string& path, const std::string& name); // 1 ///une mesh par style de piece different donc 7
     void setup_buffers();                                             // 2
     void render(glmax::Shader& shader) const;                         // 3
-    // void model_matice();
+
+    void add_instance(const glm::mat4& transform); //
 
 private:
     // single mesh
@@ -29,4 +30,6 @@ private:
     VAO m_vao;
     VBO m_vbo;
     EBO m_ebo;
+
+    std::vector<glm::mat4> m_instances; // matrices de transformation
 };
