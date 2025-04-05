@@ -69,9 +69,9 @@ int main()
 
     Model3D model1;
     Model3D model2;
-    // Model3D model3;
-    // Model3D model4;
-    // Model3D model5;
+    Model3D model3;
+    Model3D model4;
+    Model3D model5;
     Model3D model6;
     ////
     Echequier echequier;
@@ -90,14 +90,17 @@ int main()
                 // model2.load_mesh("golden_ball/golden_ball.obj", "golden_ball");
                 model1.load_mesh("oscar_award/oscar_award.obj", "oscar_award");
                 model2.load_mesh("grammy_award/grammy_award.obj", "grammy_award");
-                // model3.load_mesh("mtv_award_3/mtv_award.obj", "mtv_award");
+                model3.load_mesh("mtv_award/mtv.obj", "mtv_award");
                 // model4.load_mesh("golden_raspberry/golden_raspberry.obj", "golden_raspberry");
+                model4.load_mesh("golden_disk/golden_disk.obj", "golden_disk");
+                model5.load_mesh("golden_palm/golden_palm.obj", "golden_palm");
+                model6.load_mesh("golden_globe/golden_globe.obj", "golden_globe");
 
                 model1.setup_buffers();
                 model2.setup_buffers();
-                // model3.setup_buffers();
-                // model4.setup_buffers();
-                // model5.setup_buffers();
+                model3.setup_buffers();
+                model4.setup_buffers();
+                model5.setup_buffers();
                 model6.setup_buffers();
                 ///////////////
             },
@@ -123,9 +126,9 @@ int main()
                 //MODEL RENDER
                 model1.render(shader); 
                 model2.render(shader); 
-                // model3.render(shader); 
-                // model4.render(shader); 
-                // model5.render(shader); 
+                model3.render(shader); 
+                model4.render(shader); 
+                model5.render(shader); 
                 model6.render(shader); 
                 /////////////////////////////
 /////////
