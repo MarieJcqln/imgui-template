@@ -20,40 +20,6 @@
 // Variables OpenGL
 GLuint vao, vbo; // Pour stocker les objets OpenGL
 
-// // Fonction d'initialisation OpenGL
-// void initOpenGL()
-// {
-//     std::cout << "Initialisation OpenGL..." << std::endl;
-
-//     // Activer le test de profondeur
-//     glEnable(GL_DEPTH_TEST);
-
-//     // Création d'un VAO (Vertex Array Object)
-//     glGenVertexArrays(1, &vao);
-//     glBindVertexArray(vao);
-
-//     // Création d'un VBO (Vertex Buffer Object)
-//     glGenBuffers(1, &vbo);
-//     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-//     // Exemple de données pour un simple triangle (à remplacer par ton échiquier 3D)
-//     float vertices[] = {
-//         -0.5f, -0.5f, 0.0f, // Bas gauche
-//         0.5f, -0.5f, 0.0f,  // Bas droit
-//         0.0f, 0.5f, 0.0f    // Haut
-//     };
-
-//     // Charger les données dans le VBO
-//     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-//     // Activer et spécifier l'attribut de position (index 0)
-//     glEnableVertexAttribArray(0);
-//     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-
-//     glBindVertexArray(0); // Débind
-// }
-
-// Fonction de rendu OpenGL
 void drawOpenGL()
 {
     glClearColor(0.847f, 0.82f, 0.929f, 1.f);
@@ -109,15 +75,13 @@ int main()
                 //////// CHARGER LES MODEL 3D//////:
                 shader.load_shader("model.vs.glsl", "model.fs.glsl");
 
-                // model1.load_mesh("grammy_award_6/grammy_award_6.obj", "grammy_award_6"); // ne le faire qu'une fois pour chaque type de pièce
-                // model2.load_mesh("golden_ball/golden_ball.obj", "golden_ball");
                 model1.load_mesh("oscar_award/oscar_award.obj", "oscar_award");
-                model2.load_mesh("grammy_award/grammy_award.obj", "grammy_award");
-                model3.load_mesh("mtv_award/mtv.obj", "mtv_award");
+                model2.load_mesh("grammy_award/grammy_award.obj", "grammy_award"); // FOUS
+                model3.load_mesh("mtv_award/mtv.obj", "mtv_award");                // CAVALIERS
                 // model4.load_mesh("golden_raspberry/golden_raspberry.obj", "golden_raspberry");
                 model4.load_mesh("golden_disk/golden_disk.obj", "golden_disk");
                 model5.load_mesh("golden_palm/golden_palm.obj", "golden_palm");
-                model6.load_mesh("golden_globe/golden_globe.obj", "golden_globe");
+                model6.load_mesh("golden_globe/golden_globe.obj", "golden_globe"); // TOURS
                 model7.load_mesh("chessboard/chessboard.obj", "chessboard");
 
                 model1.setup_buffers();
@@ -138,6 +102,8 @@ int main()
                     place_piece(model5, i, 1);       // noir
                     place_piece(model5, i, 1, true); // blanc (symetrie de ligne 1 = ligne 6)
                 }
+                // charge un seul modele par type de pièce, puis on instanci plusieurs fois à différentes
+                // psoition sur l’echequier en utilisant  matrice de transforamtion
 
                 // TOURS (model6)
                 place_piece(model6, 0, 0); // noir
@@ -193,7 +159,7 @@ int main()
                 model6.render(shader); 
                 model7.render(shader); 
                 /////////////////////////////
-/////////
+
                 // Dessin de l'échiquier
                 echequier.draw();
 

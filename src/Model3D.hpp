@@ -14,18 +14,12 @@ public:
     void setup_buffers();                                             // 2
     void render(glmax::Shader& shader) const;                         // 3
 
-    void add_instance(const glm::mat4& transform); //
+    void add_instance(const glm::mat4& transform); // stock mtrice de transformatin
 
 private:
     // single mesh
     glmax::Mesh m_mesh;
-    // glmax::Mesh model_matrice_pawn{glm::mat4(1.0f)}; /// FAIRE MODEL MATRICE (pour les trandformation) ///une matirce par pièce ! donc 12 pour les pions
-    // glmax::Mesh model_matrice_tower;
-    // glmax::Mesh model_matrice_bishop;
-    // glmax::Mesh model_matrice_horse;
-    // glmax::Mesh model_matrice_queen;
-    // glmax::Mesh model_matrice_king;
-    //
+
     // Buffers
     VAO m_vao;
     VBO m_vbo;
