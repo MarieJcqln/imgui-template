@@ -143,13 +143,35 @@ int main()
                 shader.set_uniform_matrix_4fv("view", camera.get_view_matrix());
                 shader.set_uniform_matrix_4fv("projection", projection);
 
-                //LIGHT SETTINGS
+                //LIGHT SETTINGS 
+                //light blanche au milieu 
                 shader.set_uniform_3fv("lightPos", glm::vec3(5.0f, 5.0f, 5.0f));
                 shader.set_uniform_3fv("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
                 
+
+                ////FAIRE FOCNTIONNE DE IS_WHITE_TRUN to play
+                bool is_white_turn = false; // ou une variable globale que tu changes selon le tour
+
+                // Postions des deux lumières de chaque côté de l’échequier
+                // light à gauche (joeur noir)
+                glm::vec3 lightPos1 = glm::vec3(-8.0f, 10.0f, 15.0f); //-5;5;0
+                // light a drote (joeur blanc) 
+                glm::vec3 lightPos2 = glm::vec3(8.0f, 10.0f, -15.0f); //13;5;0 //+chiffre du milieu grand + ca eclair
+
+                shader.use();
+                shader.set_uniform_3fv("lightPos1", lightPos1);
+                shader.set_uniform_3fv("lightColor1", glm::vec3(1.0f,0.8f,0.9f)); // lumiere roug caire
+                shader.set_uniform_1i("lightActive1", !is_white_turn); // lumiere rouge si c'est au noir ed jouer
+
+                shader.set_uniform_3fv("lightPos2", lightPos2);
+                shader.set_uniform_3fv("lightColor2", glm::vec3(0.8f,0.9f,1.0f)); //lumiere bleu clair
+                shader.set_uniform_1i("lightActive2", is_white_turn); // lumiere bleu si c'est au blanc de jouer
+
+
                 //CAMERA SETTINGS
                 shader.set_uniform_3fv("viewPos", camera.get_position());
                 
+
                 //MODEL RENDER
                 model1.render(shader); 
                 model2.render(shader); 
