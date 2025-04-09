@@ -125,21 +125,20 @@ std::vector<position> Pawn::moves_possible(position piece_position, Echequier& e
         }
     }
 
-    // Capture diagonale
-    /* for (int dx : {-1, 1})
+    // Captures diagonales
+    for (int dx = -1; dx <= 1; dx += 2) // -1 et +1
     {
-        int newX = x + dx;
-        int newY = y + direction;
+        int new_x = x + dx;
+        int new_y = y + direction;
 
-        if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8)
+        if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8)
         {
-            Piece* target = echequier.tab_piece[newX][newY];
-            if (target != nullptr && target->m_color != m_color)
+            if (echequier.tab_piece[new_y][new_x] != nullptr && echequier.tab_piece[new_y][new_x]->m_color != m_color)
             {
-                list_moves.emplace_back(newX, newY);
+                list_moves.emplace_back(new_x, new_y); // Capture possible
             }
         }
-    } */
+    }
 
     return list_moves;
 }
@@ -181,7 +180,7 @@ std::vector<position> Horse::moves_possible(position piece_position, Echequier& 
         if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8)
         {
             // Vérifier si la case cible est vide
-            if (echequier.tab_piece[new_y][new_x] == nullptr)
+            if (echequier.tab_piece[new_y][new_x] == nullptr || echequier.tab_piece[new_y][new_x]->m_color != m_color)
             {
                 list_moves.emplace_back(new_x, new_y);
             }
@@ -206,41 +205,59 @@ std::vector<position> King::moves_possible(position piece_position, Echequier& e
 {
     std::vector<position> list_moves{};
 
-    // Avance de 1 dans toutes les directions
-    // on vérifie si les cases sont vides et dans l'échequier
-    if ((piece_position.x + 1) < 8 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x + 1] == nullptr)
+    const int directions[8][2] = {
+        {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, 1}, {1, -1}, {-1, -1}
+    };
+
+    for (const auto& dir : directions)
     {
-        list_moves.emplace_back(piece_position.x + 1, piece_position.y + 1);
-    }
-    if ((piece_position.x - 1) >= 0 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x - 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 1, piece_position.y - 1);
-    }
-    if ((piece_position.x + 1) < 8 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x + 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x + 1, piece_position.y - 1);
-    }
-    if ((piece_position.x - 1) >= 0 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x - 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 1, piece_position.y + 1);
+        int new_x = piece_position.x + dir[0];
+        int new_y = piece_position.y + dir[1];
+
+        if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8)
+        {
+            if (echequier.tab_piece[new_y][new_x] == nullptr || echequier.tab_piece[new_y][new_x]->m_color != m_color)
+            {
+                list_moves.emplace_back(new_x, new_y);
+            }
+        }
     }
 
-    if ((piece_position.x + 1) < 8 && echequier.tab_piece[piece_position.y][piece_position.x + 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x + 1, piece_position.y);
-    }
-    if ((piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x, piece_position.y + 1);
-    }
-    if ((piece_position.x - 1) >= 0 && echequier.tab_piece[piece_position.y][piece_position.x - 1] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x - 1, piece_position.y);
-    }
-    if ((piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x] == nullptr)
-    {
-        list_moves.emplace_back(piece_position.x, piece_position.y - 1);
-    }
+    /*     // Avance de 1 dans toutes les directions
+        // on vérifie si les cases sont vides et dans l'échequier
+        if ((piece_position.x + 1) < 8 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x + 1] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x + 1, piece_position.y + 1);
+        }
+        if ((piece_position.x - 1) >= 0 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x - 1] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x - 1, piece_position.y - 1);
+        }
+        if ((piece_position.x + 1) < 8 && (piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x + 1] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x + 1, piece_position.y - 1);
+        }
+        if ((piece_position.x - 1) >= 0 && (piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x - 1] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x - 1, piece_position.y + 1);
+        }
+
+        if ((piece_position.x + 1) < 8 && echequier.tab_piece[piece_position.y][piece_position.x + 1] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x + 1, piece_position.y);
+        }
+        if ((piece_position.y + 1) < 8 && echequier.tab_piece[piece_position.y + 1][piece_position.x] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x, piece_position.y + 1);
+        }
+        if ((piece_position.x - 1) >= 0 && echequier.tab_piece[piece_position.y][piece_position.x - 1] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x - 1, piece_position.y);
+        }
+        if ((piece_position.y - 1) >= 0 && echequier.tab_piece[piece_position.y - 1][piece_position.x] == nullptr)
+        {
+            list_moves.emplace_back(piece_position.x, piece_position.y - 1);
+        } */
 
     return list_moves;
 }
