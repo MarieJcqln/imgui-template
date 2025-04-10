@@ -25,4 +25,5 @@ public:
     position selected_piece_position;
     bool     is_selected = false;
     bool     white_turn  = true;
+    position trap_position{};
 };

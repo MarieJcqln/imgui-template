@@ -1,5 +1,6 @@
 #include "echequier.hpp"
 #include "helper.hpp"
+#include "math.hpp"
 #include "piece.hpp"
 #include "utils.hpp"
 
@@ -36,6 +37,9 @@ void Echequier::initialize_array()
     tab_piece[7][5] = std::make_unique<Bishop>(Color::white); // F
     tab_piece[7][6] = std::make_unique<Horse>(Color::white);  // C
     tab_piece[7][7] = std::make_unique<Tower>(Color::white);  // T
+
+    // Initialiser la position piégée
+    trap_position = {.x = 3, .y = 3};
 }
 
 void path_choice() {}
@@ -158,8 +162,19 @@ void Echequier::draw()
                         //  si je click (  if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))) sur une case tab_piece[y][x] = nullptr et que le mouvement est OK
                         //  => La pièce en selected_piece_position bouge sur la case tab_piece[y][x] = nullptr (tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_pice_position.x]))
                         tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
-                        is_selected                                                     = false;
-                        white_turn                                                      = !white_turn;
+                        // On vérifie si la pièce est sur le piège
+
+                        tab_piece[trap_position.y][trap_position.x] = nullptr;
+                        std::cout << "Votre pièce est tombée dans le piège ! Pas de chance ..." << '\n';
+
+                        is_selected = false;
+                        white_turn  = !white_turn;
+
+                        // Vérifier et déplacer la case piégée
+                        std::pair<int, int> next_trap{};
+                        next_trap       = next_markov_position(trap_position.x, trap_position.y, build_transition_matrix());
+                        trap_position.x = next_trap.first;
+                        trap_position.y = next_trap.second;
                         // fin du tour
                     }
                     else if (
@@ -171,8 +186,19 @@ void Echequier::draw()
                         // Capture
                         tab_piece[y][x]                                                 = std::move(tab_piece[selected_piece_position.y][selected_piece_position.x]);
                         tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
-                        is_selected                                                     = false;
-                        white_turn                                                      = !white_turn;
+
+                        tab_piece[trap_position.y][trap_position.x] = nullptr;
+                        std::cout << "Votre pièce est tombée dans le piège ! Pas de chance ..." << '\n';
+
+                        is_selected = false;
+                        white_turn  = !white_turn;
+
+                        // Vérifier et déplacer la case piégée
+                        std::pair<int, int> next_trap{};
+                        next_trap       = next_markov_position(trap_position.x, trap_position.y, build_transition_matrix());
+                        trap_position.x = next_trap.first;
+                        trap_position.y = next_trap.second;
+                        // fin du tour
                     }
 
                     else if (x == selected_piece_position.x && y == selected_piece_position.y)
