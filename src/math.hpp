@@ -17,9 +17,11 @@ std::vector<std::vector<int>> tirage_couleur();
 
 // Fonction pour générer un nombre suivant une loi normale (Gaussienne)
 double random_normal(double mean, double stddev);
+double generate_time();
 
 // Fonction pour générer un nombre suivant une loi exponentielle
 double random_exponential(double lambda);
+double generate_duration_exp();
 
 double                           center_weight(int x, int y);
 std::vector<std::vector<double>> build_transition_matrix();

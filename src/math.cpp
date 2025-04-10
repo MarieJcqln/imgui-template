@@ -57,11 +57,39 @@ double random_normal(double mean, double stddev)
     return distribution(gen);
 }
 
+// Pour générer une durée
+double generate_time()
+{
+    // Paramètres de la loi normale
+    double mean   = 35.0; // Moyenne de 35 secondes
+    double stddev = 10.0; // Écart-type de 10 secondes
+
+    // On génère une durée en secondes
+    double duration = random_normal(mean, stddev);
+
+    duration = std::clamp(duration, 0.0, 100.0);
+
+    return duration;
+}
+
 // Fonction pour générer un nombre suivant une loi exponentielle
 double random_exponential(double lambda)
 {
     std::exponential_distribution<double> distribution(lambda);
     return distribution(gen);
+}
+
+// On générer une durée au bout de laquelle les pions des joueurs seront inversés
+double generate_duration_exp()
+{
+    double mean = 100;
+    // Calcul du lambda (inverse de la moyenne)
+    double lambda = 1.0 / mean;
+
+    // On génère une durée en secondes
+    double duration = random_exponential(lambda);
+
+    return duration;
 }
 
 // Chaine de Markov
