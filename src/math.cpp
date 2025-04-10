@@ -185,3 +185,24 @@ std::pair<int, int> next_markov_position(int x, int y, const std::vector<std::ve
     int new_y      = next_index / SIZE;
     return {new_x, new_y};
 }
+
+// Bernoulli
+
+// Succès / échec
+// Opportunité de récupérer sa dame quand il la perd
+// Bouton "essaie de récupérer ta dame"
+
+std::string random_bernoulli(double p)
+{
+    std::bernoulli_distribution dist(p); // Probabilité de succès p
+
+    // Renvoie soit 0 = échec soit 1 = succès
+    if (dist(gen))
+    {
+        return "Succès";
+    }
+    else
+    {
+        return "Échec";
+    }
+}

@@ -27,3 +27,5 @@ double                           center_weight(int x, int y);
 std::vector<std::vector<double>> build_transition_matrix();
 int                              simulate_next_position(int current_index, const std::vector<std::vector<double>>& matrix);
 std::pair<int, int>              next_markov_position(int x, int y, const std::vector<std::vector<double>>& matrix);
+
+std::string random_bernoulli(double p);

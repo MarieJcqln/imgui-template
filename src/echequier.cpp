@@ -116,6 +116,10 @@ void Echequier::draw(std::vector<std::vector<int>> couleurs)
 
             if (is_selected)
             {
+                if (ImGui::IsMouseClicked(1))
+                {
+                    is_selected = false;
+                }
                 afficher_moves_possible(tab_piece[selected_piece_position.y][selected_piece_position.x]->moves_possible(selected_piece_position, *this), x, y);
             }
             if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))

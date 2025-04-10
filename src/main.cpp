@@ -296,10 +296,5 @@ int main()
         }
     );
 
-    // Test des fonctions
-    std::cout << "Loi uniforme (0, 1) : " << random_uniform(0.0, 1.0) << std::endl;
-    std::cout << "Loi normale (moyenne = 0, écart-type = 1) : " << random_normal(0.0, 1.0) << std::endl;
-    std::cout << "Loi exponentielle (lambda = 1.0) : " << random_exponential(1.0) << std::endl;
-
     return 0;
 }
