@@ -19,7 +19,7 @@ public:
     void                                                 initialize_array();
 
     // fonction draw
-    void draw();
+    void draw(std::vector<std::vector<int>> couleurs);
 
     // Position de la pièce sélectionnée :
     position selected_piece_position;

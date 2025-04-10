@@ -65,6 +65,8 @@ int main()
     ////
     Echequier echequier;
 
+    std::vector<std::vector<int>> couleurs{tirage_couleur()};
+
     quick_imgui::loop(
         "Chess 3D",
         {
@@ -183,7 +185,7 @@ int main()
                 /////////////////////////////
 
                 // Dessin de l'échiquier
-                echequier.draw();
+                echequier.draw(couleurs);
 
 
                 // Interface ImGui

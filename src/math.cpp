@@ -19,6 +19,37 @@ double random_uniform(double a, double b)
     return distribution(gen);
 }
 
+// Faire 2 vecteurs de couleurs : un pour les couleurs claires et un pour les couleurs foncées
+// Tirer aléatoirement une couleur claire et une couleur foncée
+std::vector<std::vector<int>> tirage_couleur()
+{
+    std::vector<std::vector<int>> light_colors;
+    std::vector<std::vector<int>> dark_colors;
+
+    // Ajout de couleurs au vecteur light_colors
+    light_colors.push_back({251, 252, 252});
+    light_colors.push_back({249, 231, 159});
+    light_colors.push_back({210, 180, 222});
+    light_colors.push_back({212, 239, 223});
+    light_colors.push_back({250, 219, 216});
+
+    // dark_colors
+    dark_colors.push_back({23, 165, 137});
+    dark_colors.push_back({28, 40, 51});
+    dark_colors.push_back({46, 134, 193});
+    dark_colors.push_back({125, 60, 152});
+    dark_colors.push_back({183, 149, 11});
+
+    std::vector<std::vector<int>> choix;
+
+    // Tirage aléatoire
+
+    choix.push_back(light_colors[random_uniform(0, 4)]);
+    choix.push_back(dark_colors[random_uniform(0, 4)]);
+
+    return choix;
+}
+
 // Fonction pour générer un nombre suivant une loi normale (Gaussienne)
 double random_normal(double mean, double stddev)
 {
@@ -110,7 +141,7 @@ std::vector<std::vector<double>> build_transition_matrix()
     return matrix;
 }
 
-// Simulation d’un pas selon la matrice
+// Simulation selon la matrice
 int simulate_next_position(int current_index, const std::vector<std::vector<double>>& matrix)
 {
     std::discrete_distribution<> dist(matrix[current_index].begin(), matrix[current_index].end());

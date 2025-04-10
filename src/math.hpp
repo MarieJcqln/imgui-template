@@ -12,7 +12,8 @@ class board_color {
 };
 
 // Fonction pour générer un nombre suivant une loi uniforme entre [a, b]
-double random_uniform(double a, double b);
+double                        random_uniform(double a, double b);
+std::vector<std::vector<int>> tirage_couleur();
 
 // Fonction pour générer un nombre suivant une loi normale (Gaussienne)
 double random_normal(double mean, double stddev);

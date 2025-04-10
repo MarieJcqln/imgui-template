@@ -44,7 +44,7 @@ void Echequier::initialize_array()
 
 void path_choice() {}
 
-void Echequier::draw()
+void Echequier::draw(std::vector<std::vector<int>> couleurs)
 {
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{1.0f, 1.0f});
 
@@ -58,6 +58,7 @@ void Echequier::draw()
 
     bool hasPushedColor = false; // Vérifier si on a push une couleur
     int  compteur{0};
+
     for (int y{0}; y < 8; y++)
     {                              // line
         for (int x{0}; x < 8; x++) // column
@@ -70,7 +71,8 @@ void Echequier::draw()
             }
             else
             {
-                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f}); // Noir
+                // ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{0.f, 0.f, 0.f, 1.f}); // Noir
+                ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{static_cast<float>(couleurs[1][0]) / 255, static_cast<float>(couleurs[1][1]) / 255, static_cast<float>(couleurs[1][2]) / 255, 1.f});
             }
 
             // Si on a fait un PushStyleColor(), on fait un PopStyleColor()
