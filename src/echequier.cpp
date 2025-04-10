@@ -56,8 +56,9 @@ void Echequier::draw(std::vector<std::vector<int>> couleurs)
 
     // ImGui::PopID(); // Then pop the id you pushed after you created the widget
 
-    bool hasPushedColor = false; // Vérifier si on a push une couleur
-    int  compteur{0};
+    bool  hasPushedColor = false; // Vérifier si on a push une couleur
+    int   compteur{0};
+    Color promotion_color{};
 
     for (int y{0}; y < 8; y++)
     {                              // line
@@ -168,8 +169,18 @@ void Echequier::draw(std::vector<std::vector<int>> couleurs)
                         //  si je click (  if (ImGui::Button(label.c_str(), ImVec2{50.f, 50.f}))) sur une case tab_piece[y][x] = nullptr et que le mouvement est OK
                         //  => La pièce en selected_piece_position bouge sur la case tab_piece[y][x] = nullptr (tab_piece[y][x] = std::move(tab_piece[selected_piece_position.y][selected_pice_position.x]))
                         tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
-                        // On vérifie si la pièce est sur le piège
 
+                        // Vérifier si un pion arrive au bout
+                        if (tab_piece[y][x] && tab_piece[y][x]->m_letter == "P" && ((tab_piece[y][x]->m_color == Color::white && y == 0) || (tab_piece[y][x]->m_color == Color::black && y == 7)))
+                        {
+                            std::cout << "Le pion est arrivé au bout" << '/n';
+                            promotion_pending  = true;
+                            promotion_position = {.x = x, .y = y};
+                            promotion_color    = tab_piece[y][x]->m_color;
+                            // ImGui::OpenPopup("Promotion");
+                        }
+
+                        // On vérifie si la pièce est sur le piège
                         tab_piece[trap_position.y][trap_position.x] = nullptr;
                         std::cout << "Votre pièce est tombée dans le piège ! Pas de chance ..." << '\n';
 
@@ -192,6 +203,16 @@ void Echequier::draw(std::vector<std::vector<int>> couleurs)
                         // Capture
                         tab_piece[y][x]                                                 = std::move(tab_piece[selected_piece_position.y][selected_piece_position.x]);
                         tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
+
+                        // Vérifier si un pion arrive au bout
+                        if (tab_piece[y][x] && tab_piece[y][x]->m_letter == "P" && ((tab_piece[y][x]->m_color == Color::white && y == 0) || (tab_piece[y][x]->m_color == Color::black && y == 7)))
+                        {
+                            std::cout << "Le pion est arrivé au bout" << '/n';
+                            promotion_pending  = true;
+                            promotion_position = {.x = x, .y = y};
+                            promotion_color    = tab_piece[y][x]->m_color;
+                            // ImGui::OpenPopup("Promotion");
+                        }
 
                         tab_piece[trap_position.y][trap_position.x] = nullptr;
                         std::cout << "Votre pièce est tombée dans le piège ! Pas de chance ..." << '\n';
@@ -227,7 +248,94 @@ void Echequier::draw(std::vector<std::vector<int>> couleurs)
         }
     }
 
-    // ImGui::PopStyleColor();
+    if (promotion_pending)
+    {
+        ImGui::OpenPopup("Promotion");
+    }
+    if (ImGui::BeginPopupModal("Promotion", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("Choisissez une pièce pour la promotion :");
+
+        if (ImGui::Button("Reine"))
+        {
+            tab_piece[promotion_position.y][promotion_position.x] = std::make_unique<Queen>(promotion_color);
+            promotion_pending                                     = false;
+            ImGui::CloseCurrentPopup();
+        }
+
+        if (ImGui::Button("Fou"))
+        {
+            tab_piece[promotion_position.y][promotion_position.x] = std::make_unique<Bishop>(promotion_color);
+            promotion_pending                                     = false;
+            ImGui::CloseCurrentPopup();
+        }
+
+        if (ImGui::Button("Cavalier"))
+        {
+            tab_piece[promotion_position.y][promotion_position.x] = std::make_unique<Horse>(promotion_color);
+            promotion_pending                                     = false;
+            ImGui::CloseCurrentPopup();
+        }
+
+        if (ImGui::Button("Tour"))
+        {
+            tab_piece[promotion_position.y][promotion_position.x] = std::make_unique<Tower>(promotion_color);
+            promotion_pending                                     = false;
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    }
+
+    //  ImGui::PopStyleColor();
     ImGui::PopStyleColor(); // Pop the initial button color
     ImGui::PopStyleVar();
+    if (check_end_game())
+    {
+        ImGui::OpenPopup("Fin de Partie");
+    }
+    ImGui::SetNextWindowSize(ImVec2(400, 200), ImGuiCond_Always);
+    if (ImGui::BeginPopupModal("Fin de Partie", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("%s", "Fin de Partie");
+        if (ImGui::Button("Fermer"))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+}
+
+bool Echequier::check_end_game()
+{
+    bool whiteKingFound = false;
+    bool blackKingFound = false;
+
+    for (const auto& row : tab_piece)
+    {
+        for (const auto& piece : row)
+        {
+            if (piece)
+            {
+                if (piece->m_letter == "K" && piece->m_color == Color::white)
+                    whiteKingFound = true;
+                else if (piece->m_letter == "K" && piece->m_color == Color::black)
+                    blackKingFound = true;
+            }
+        }
+    }
+
+    if (!whiteKingFound)
+    {
+        std::cout << "Le roi blanc est tombé. Victoire des noirs !" << std::endl;
+        return true;
+    }
+
+    if (!blackKingFound)
+    {
+        std::cout << "Le roi noir est tombé. Victoire des blancs !" << std::endl;
+        return true;
+    }
+
+    return false; // Les deux rois sont encore là
 }

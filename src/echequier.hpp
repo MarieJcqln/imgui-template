@@ -26,4 +26,7 @@ public:
     bool     is_selected = false;
     bool     white_turn  = true;
     position trap_position{};
+    bool     check_end_game();
+    bool     promotion_pending = false;
+    position promotion_position{};
 };
