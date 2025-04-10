@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <list>
+#include <numeric>
 #include <random>
 #include "quick_imgui/quick_imgui.hpp"
 
@@ -10,7 +11,8 @@ class board_color {
     ImVec4 dark_color{0.f, 0.f, 0.f, 1.f};
     ImVec4 light_color{1.f, 1.f, 1.f, 1.f};
 };
-
+void   init_random();
+double random_uniform_01();
 // Fonction pour générer un nombre suivant une loi uniforme entre [a, b]
 double                        random_uniform(double a, double b);
 std::vector<std::vector<int>> tirage_couleur();

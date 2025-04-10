@@ -105,6 +105,7 @@ int main()
     ////
     Echequier echequier;
 
+    init_random();
     std::vector<std::vector<int>> couleurs{tirage_couleur()};
 
     // variable pour detecter changement de tour plus tard

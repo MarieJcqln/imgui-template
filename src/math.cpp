@@ -1,6 +1,8 @@
 #include "math.hpp"
 #include <imgui.h>
 #include <algorithm>
+#include <cstdlib> // Pour std::rand() et std::srand()
+#include <ctime>   // Pour std::time()
 #include <iomanip>
 #include <iostream>
 #include <list>
@@ -8,15 +10,27 @@
 #include <vector>
 #include "quick_imgui/quick_imgui.hpp"
 
-// Générateur aléatoire global
+// std::srand(static_cast<unsigned int>(std::time(nullptr)));
 static std::random_device rd;
 std::mt19937              gen(rd());
+// Générateur aléatoire global
+void init_random()
+{
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+}
 
-// Fonction pour générer un nombre suivant une loi uniforme entre [a, b]
+// Loi uniforme entre O et 1
+double random_uniform_01()
+{
+    return static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
+}
+
+// Fonction pour générer un nombre avec la loi uniforme entre [a, b]
 double random_uniform(double a, double b)
 {
-    std::uniform_real_distribution<double> distribution(a, b);
-    return distribution(gen);
+    // rand() retourne un entier entre 0 et RAND_MAX
+    double u = static_cast<double>(std::rand()) / static_cast<double>(RAND_MAX);
+    return a + u * (b - a);
 }
 
 // Faire 2 vecteurs de couleurs : un pour les couleurs claires et un pour les couleurs foncées
@@ -44,8 +58,11 @@ std::vector<std::vector<int>> tirage_couleur()
 
     // Tirage aléatoire
 
-    choix.push_back(light_colors[random_uniform(0, 4)]);
-    choix.push_back(dark_colors[random_uniform(0, 4)]);
+    int light_index = std::rand() % 5; // Générer un nombre entre 0 et 4
+    int dark_index  = std::rand() % 5; // Générer un nombre entre 0 et 4
+
+    choix.push_back(light_colors[light_index]);
+    choix.push_back(dark_colors[dark_index]);
 
     return choix;
 }
@@ -75,8 +92,13 @@ double generate_time()
 // Fonction pour générer un nombre suivant une loi exponentielle
 double random_exponential(double lambda)
 {
-    std::exponential_distribution<double> distribution(lambda);
-    return distribution(gen);
+    double u{};
+    while (u <= 1e-10)
+    {
+        u = random_uniform_01();
+    }
+
+    return -std::log(u) / lambda;
 }
 
 // On générer une durée au bout de laquelle les pions des joueurs seront inversés
@@ -194,15 +216,6 @@ std::pair<int, int> next_markov_position(int x, int y, const std::vector<std::ve
 
 std::string random_bernoulli(double p)
 {
-    std::bernoulli_distribution dist(p); // Probabilité de succès p
-
-    // Renvoie soit 0 = échec soit 1 = succès
-    if (dist(gen))
-    {
-        return "Succès";
-    }
-    else
-    {
-        return "Échec";
-    }
+    double u = random_uniform_01();
+    return (u < p) ? "Succès" : "Échec";
 }
