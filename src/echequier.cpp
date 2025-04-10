@@ -162,6 +162,19 @@ void Echequier::draw()
                         white_turn                                                      = !white_turn;
                         // fin du tour
                     }
+                    else if (
+                        tab_piece[y][x] != nullptr &&                                                                           // Il y a une pièce
+                        tab_piece[y][x]->m_color != tab_piece[selected_piece_position.y][selected_piece_position.x]->m_color && // Elle est de l'autre couleur
+                        verification(white_turn, Moves, tab_piece[selected_piece_position.y][selected_piece_position.x]->m_color == white, x, y)
+                    ) // Le mouvement est valide
+                    {
+                        // Capture
+                        tab_piece[y][x]                                                 = std::move(tab_piece[selected_piece_position.y][selected_piece_position.x]);
+                        tab_piece[selected_piece_position.y][selected_piece_position.x] = nullptr;
+                        is_selected                                                     = false;
+                        white_turn                                                      = !white_turn;
+                    }
+
                     else if (x == selected_piece_position.x && y == selected_piece_position.y)
                     {
                         // si la même case est selectionnée => on eneleve la selection et donc la couleur

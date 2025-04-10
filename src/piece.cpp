@@ -179,8 +179,8 @@ std::vector<position> Horse::moves_possible(position piece_position, Echequier& 
         // Vérifier que les nouveaux indices sont dans les bornes de l'échiquier
         if (new_x >= 0 && new_x < 8 && new_y >= 0 && new_y < 8)
         {
-            // Vérifier si la case cible est vide
-            if (echequier.tab_piece[new_y][new_x] == nullptr || echequier.tab_piece[new_y][new_x]->m_color != m_color)
+            // Vérifier si la case cible est vide ou que c'est un adversaire
+            if (echequier.tab_piece[new_y][new_x] == nullptr || (echequier.tab_piece[new_y][new_x] != nullptr && echequier.tab_piece[new_y][new_x]->m_color != m_color))
             {
                 list_moves.emplace_back(new_x, new_y);
             }
