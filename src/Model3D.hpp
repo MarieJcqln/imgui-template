@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "Mesh.hpp"
 #include "Shader.hpp"
 #include "buffers/EBO.hpp"
@@ -15,6 +16,7 @@ public:
     void render(glmax::Shader& shader) const;                         // 3
 
     void add_instance(const glm::mat4& transform); // stock mtrice de transformatin
+    //// void update_instance(int index, const glm::mat4& transform);
 
 private:
     // single mesh
@@ -26,4 +28,5 @@ private:
     EBO m_ebo;
 
     std::vector<glm::mat4> m_instances; // matrices de transformation
+    //// GLuint                 instance_vbo; // VBO pour les instances
 };

@@ -83,3 +83,16 @@ void Model3D::add_instance(const glm::mat4& transform)
 {
     m_instances.push_back(transform);
 }
+
+// void Model3D::update_instance(int index, const glm::mat4& transform)
+// {
+//     if (index >= 0 && index < m_instances.size())
+//     {
+//         m_instances[index] = transform;
+
+//         // Mettre à jour le buffer d'instances
+//         glBindBuffer(GL_ARRAY_BUFFER, instance_vbo);
+//         glBufferSubData(GL_ARRAY_BUFFER, index * sizeof(glm::mat4), sizeof(glm::mat4), &m_instances[index]);
+//         glBindBuffer(GL_ARRAY_BUFFER, 0);
+//     }
+// }
