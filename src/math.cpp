@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <iostream>
 #include <list>
+#include <numbers>
 #include <numeric>
 #include <vector>
 #include "quick_imgui/quick_imgui.hpp"
@@ -218,4 +219,57 @@ std::string random_bernoulli(double p)
 {
     double u = random_uniform_01();
     return (u < p) ? "Succès" : "Échec";
+}
+
+// Si le joueur obtient M succès sur n essais,
+// Il pourra jouer 2 fois
+int random_binomial(int n, double p)
+{
+    int successes = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        if (random_bernoulli(p) == "Succès")
+        {
+            successes++;
+        }
+    }
+    return successes;
+}
+
+bool bonus_turn(int m, int n, double p)
+{
+    return random_binomial(n, p) >= m;
+}
+
+// Si on obtient 1 ou plus, le roi est bloqué pendant un tour
+int random_poisson(double lambda)
+{
+    int    count = 0;
+    double L     = std::exp(-lambda);
+    double p     = 1.0;
+    while (p > L)
+    {
+        count++;
+        p *= random_uniform_01();
+    }
+    return count - 1;
+}
+
+bool king_block(double p)
+{
+    return random_poisson(p) >= 1;
+}
+
+// Chaque joueur a un pion spécial dont la portée est définie par la loi de cauchy
+double random_cauchy(double median, double gamma)
+{
+    double u = random_uniform_01();
+    return median + gamma * std::tan(std::numbers::pi * (u - 0.5));
+}
+
+int crazy_pawn()
+{
+    int range = std::clamp(static_cast<int>(std::round(std::abs(random_cauchy(1, 2)))), 1, 8);
+
+    return range;
 }

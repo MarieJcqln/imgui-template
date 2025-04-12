@@ -31,3 +31,12 @@ int                              simulate_next_position(int current_index, const
 std::pair<int, int>              next_markov_position(int x, int y, const std::vector<std::vector<double>>& matrix);
 
 std::string random_bernoulli(double p);
+
+int  random_binomial(int n, double p);
+bool bonus_turn();
+
+int  random_poisson(double lambda);
+bool king_block(double p);
+
+double random_cauchy(double median, double gamma);
+int    crazy_pawn();
