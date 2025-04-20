@@ -24,14 +24,15 @@ uniform bool lightActive2;
 // uniform vec3 viewPos;
 // uniform vec3 lightColor;
 
-uniform vec3 Kd;
-uniform vec3 Ka;
-uniform vec3 Ks;
-uniform float Ns;
+uniform vec3 Kd; //lumiere diffuse
+uniform vec3 Ka; //lumiere mabiante
+uniform vec3 Ks; //lumiere speculaire
+uniform float Ns; //shiness = reflet
 
 uniform bool useTexture;
 uniform sampler2D map_Kd;
 
+//calcul de l'eclairage pour une seule lumiere
 vec3 computeLight(vec3 lightPos, vec3 lightColor, vec3 N, vec3 V, vec3 diffuseColor) {
     vec3 L = normalize(lightPos - FragPos);
     vec3 H = normalize(L + V);

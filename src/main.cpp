@@ -95,7 +95,7 @@ int main()
     glmax::Shader shader;
     glmax::Camera camera{true};
 
-    Model3D model1;
+    Model3D model1; // appel constructeur
     Model3D model2;
     Model3D model3;
     Model3D model4;
@@ -111,6 +111,11 @@ int main()
     // variable pour detecter changement de tour plus tard
     bool last_turn_state = echequier.white_turn;
 
+    ///////////3D
+    //// creation tableau de pointeur vers model 3D
+    // Model3D* models[7] = {nullptr, &model1, &model2, &model3, &model4, &model5, &model6};
+    //////////
+
     quick_imgui::loop(
         "Chess 3D",
         {
@@ -118,6 +123,8 @@ int main()
                 std::cout << "Init OpenGL et Échiquier\n";
                 // initOpenGL();                 // appel fonction initOpenGL()
                 echequier.initialize_array(); // initialisation échiquier
+
+                // echequier.initialize_textures();
                 //////// CHARGER LES MODEL 3D//////:
                 shader.load_shader("model.vs.glsl", "model.fs.glsl");
 
@@ -174,9 +181,28 @@ int main()
                 place_piece(model4, 3, 0, true);
 
                 // ROIS (model1)
+                // echequier.place_piece_3D(Piece{"Oscar", true}, 4, 0, &modeleOscar, true);
                 place_piece(model1, 4, 0);       // noir
                 place_piece(model1, 4, 0, true); //
+
+                ////////////:3D
+                // on initialise les info 3D après avoir placé toutes les pieces
+                // echequier.initialize_3d_info();
+
+                //// Initialiser les éléments du tableau
+                // models[0] = nullptr; // Index 0 non utilisé
+                // models[1] = &model1;
+                // models[2] = &model2;
+                // models[3] = &model3;
+                // models[4] = &model4;
+                // models[5] = &model5;
+                // models[6] = &model6;
+
+                //// on passe le tableau de model à l'échequier
+                // echequier.models = models;
+                /////////////////
             },
+
             .loop = [&]() {
                 drawOpenGL(); // affiche rendu OpenGL
 
@@ -207,12 +233,10 @@ int main()
                 shader.use();
                 shader.set_uniform_3fv("lightPos1", lightPos1);
                 shader.set_uniform_3fv("lightColor1", glm::vec3(1.0f, 0.8f, 0.9f)); // lumiere roug caire
-                // shader.set_uniform_1i("lightActive1", !is_white_turn); // lumiere rouge si c'est au noir ed jouer
                 shader.set_uniform_1i("lightActive1", !echequier.white_turn); // acces aattribut white_turn su objet echequier
 
                 shader.set_uniform_3fv("lightPos2", lightPos2);
                 shader.set_uniform_3fv("lightColor2", glm::vec3(0.8f, 0.9f, 1.0f)); // lumiere bleu clair
-                // shader.set_uniform_1i("lightActive2", is_white_turn); // lumiere bleu si c'est au blanc de jouer
                 shader.set_uniform_1i("lightActive2", echequier.white_turn);
 
                 // CAMERA SETTINGS
@@ -231,17 +255,8 @@ int main()
                 // Dessin de l'échiquier
                 echequier.draw(couleurs);
 
-                // Interface ImGui
-                // ImGui::Begin("Options");
-                // ImGui::Text("Interface de gestion du jeu");
-                // ImGui::End();
-               
-
                 ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoBackground;
 
-                // Position fenêtre
-                // ImGui::SetNextWindowPos(ImVec2(200, 100)); //creer pb qaund on reduit la taille de la fenetre
-                // ImGui::SetNextWindowSize(ImVec2(window_width, 100)); //creer pb qaund on reduit la taille de la fenetre
                 ImGui::Begin("TILE", nullptr, window_flags);
               
                 //// TITRE
@@ -276,14 +291,6 @@ int main()
                 ImGui::Text("%s%s", turn_text.c_str(), time_str.c_str());
                 ///////
                 ImGui::PopStyleColor();
-
-                // // Barre de progression pour le temps
-                // ImGui::SetCursorPosY(65);
-                // float progress_width = 200.0f; // Largeur de la barre de progression
-                // ImGui::SetCursorPosX((window_width - progress_width) * 0.5f);
-                // ImGui::PushStyleColor(ImGuiCol_PlotHistogram, timer_color);
-                // ImGui::ProgressBar(current_time / timer_by_person, ImVec2(progress_width, 10.0f));
-                // ImGui::PopStyleColor();
                
                 ImGui::End(); },
 
