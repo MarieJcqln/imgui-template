@@ -1,5 +1,6 @@
 #include "math.hpp"
 #include <imgui.h>
+#include <math.h>
 #include <algorithm>
 #include <cstdlib> // Pour std::rand() et std::srand()
 #include <ctime>   // Pour std::time()
@@ -34,7 +35,7 @@ double random_uniform(double a, double b)
     return a + u * (b - a);
 }
 
-// Faire 2 vecteurs de couleurs : un pour les couleurs claires et un pour les couleurs foncées
+// 2 vecteurs de couleurs : un pour les couleurs claires et un pour les couleurs foncées
 // Tirer aléatoirement une couleur claire et une couleur foncée
 std::vector<std::vector<int>> tirage_couleur()
 {
@@ -68,14 +69,14 @@ std::vector<std::vector<int>> tirage_couleur()
     return choix;
 }
 
-// Fonction pour générer un nombre suivant une loi normale (Gaussienne)
+/* // Fonction pour générer un nombre suivant une loi normale (Gaussienne)
 double random_normal(double mean, double stddev)
 {
     std::normal_distribution<double> distribution(mean, stddev);
     return distribution(gen);
-}
+} */
 
-// Pour générer une durée
+/* // Pour générer une durée
 double generate_time()
 {
     // Paramètres de la loi normale
@@ -86,6 +87,62 @@ double generate_time()
     double duration = random_normal(mean, stddev);
 
     duration = std::clamp(duration, 0.0, 100.0);
+
+    return duration;
+} */
+
+// Constantes
+const double PI        = std::numbers::pi;
+const double SQRT_2PI  = std::sqrt(2 * PI);
+const double SQRT_2EPI = std::sqrt(2 * std::exp(1) * PI);
+
+// Fonction f(x) = densité normale standard
+double f(double x)
+{
+    return std::exp(-x * x / 2) / SQRT_2PI;
+}
+
+// Fonction g(x) = enveloppe exponentielle symétrique
+double g(double x)
+{
+    return std::exp(-std::abs(x)) / 2.0;
+}
+
+// Générer une variable normale standard avec méthode du rejet
+double normal_standard()
+{
+    double u = NAN;
+    double x = 0;
+    double v = 1;
+
+    while (v > f(x))
+    {
+        // Générer x selon la loi exponentielle symétrique
+        double a = random_uniform_01();
+        x        = (a < 0.5) ? -std::log(2 * a) : std::log(2 * (1 - a));
+
+        // Générer v ∈ [0, g(x)]
+        v = g(x) * random_uniform_01();
+    }
+
+    return x;
+}
+
+// Générer une loi normale N(mean, stddev)
+double random_normal(double mean, double stddev)
+{
+    return mean + stddev * normal_standard();
+}
+
+// Exemple d'utilisation
+double generate_time()
+{
+    double mean   = 35.0;
+    double stddev = 10.0;
+
+    double duration = random_normal(mean, stddev);
+    duration        = std::max(duration, 0.0);
+    duration        = std::min(duration, 100.0);
 
     return duration;
 }

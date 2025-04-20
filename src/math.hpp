@@ -18,6 +18,11 @@ double                        random_uniform(double a, double b);
 std::vector<std::vector<int>> tirage_couleur();
 
 // Fonction pour générer un nombre suivant une loi normale (Gaussienne)
+double f(double x);
+// Fonction g(x) = enveloppe exponentielle symétrique
+double g(double x);
+// Générer une variable normale standard avec méthode du rejet
+double normal_standard();
 double random_normal(double mean, double stddev);
 double generate_time();
 
